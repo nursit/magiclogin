@@ -1,0 +1,20 @@
+<paquet
+	prefix="magiclogin"
+	categorie="auteur"
+	version="0.1.0"
+	etat="dev"
+	compatibilite="[3.0.0;3.0.*]"
+	logo="prive/themes/spip/images/magiclogin-32.png"
+	documentation=""
+	schema="0.1.0" 
+>
+
+	<nom>MagicLogin</nom>
+
+	<auteur lien='http://www.yterium.com/'>Cédric</auteur>
+
+	<licence>GNU/GPL</licence>
+	<pipeline nom="autoriser" inclure="magiclogin_autorisations.php" /> 
+
+
+</paquet>
