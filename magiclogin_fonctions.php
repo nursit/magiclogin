@@ -14,7 +14,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 function balise_LOGIN_LINKS_dist($p) {
 	$_target_url = interprete_argument_balise(1,$p);
-	var_dump($_target_url);
+
 	if (!$_target_url)
 		$_target_url = "''";
 
