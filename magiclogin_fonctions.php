@@ -40,7 +40,7 @@ function magiclogin_login_links($target_url=''){
 
 function balise_LOGOUT_LINK_dist($p) {
 	$_target_url = interprete_argument_balise(1,$p);
-	var_dump($_target_url);
+
 	if (!$_target_url)
 		$_target_url = "''";
 
