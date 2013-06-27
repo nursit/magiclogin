@@ -1,0 +1,32 @@
+<div class="ajax formulaire_spip formulaire_configurer formulaire_#FORM formulaire_#FORM-#ENV{id,nouveau}">
+	<h3>Choisissez un pseudo et indiquez votre email</h3>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV**{message_erreur})</p>]
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		[(#REM) déclarer les hidden qui déclencheront le service du formulaire
+		paramêtre : url d'action ]
+		#ACTION_FORMULAIRE{#ENV{action}}
+		#SET{fl,signup}
+		[(#ENV{_logo}|balise_img{'',spip_logos})]
+		<ul>
+			#SET{name,nom}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+			</li>
+			#SET{name,email}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]<input type="[(#HTML5|?{email,text})]" name="#GET{name}" class="text email" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+			</li>
+		</ul>
+		[(#REM) ajouter les saisies supplémentaires : extra et autre, à cet endroit ]
+  <!--extra-->
+  <p class='boutons'><span class='image_loading'>&nbsp;</span>
+		<input type='submit' class='submit' value='<:signup:bouton_terminer|attribut_html:>' /></p>
+	</div></form>
+	]
+</div>
