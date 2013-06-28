@@ -63,8 +63,14 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 	else {
 		// c'est une fin de signup par une source sociale
 		if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup'])){
-			if (sql_fetsel("*","spip_auteurs","email=".sql_quote($email))){
-				// TODO : c'est un email deja existant en base
+			if (
+				$row = sql_fetsel("*","spip_auteurs","login=".sql_quote($email))
+			  OR $row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email))){
+				// c'est un email deja existant en base
+				// on lance une inscription sur cet email
+
+				magiclogin_signup_confirmer_email($statut,$email,$nom,$row,$GLOBALS['visiteur_session']['magiclogin_pre_signup']);
+				$res = array('message_ok' => _T('signup:info_confirmer_email_deja_utilise',array('email'=>$email,"social_source"=>ucfirst($GLOBALS['visiteur_session']['magiclogin_pre_signup']['source']))));
 			}
 			else {
 				$source = $GLOBALS['visiteur_session']['magiclogin_pre_signup']['source'];
@@ -98,4 +104,30 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 	}
 
 	return $res;
+}
+
+
+function magiclogin_signup_confirmer_email($statut,$email,$nom,$desc,$pre_signup_infos){
+	include_spip("action/inscrire_auteur");
+	// attribuer un jeton de confirmation
+	$jeton = auteur_attribuer_jeton($desc['id_auteur']);
+
+	// stocker les infos de pre_signup dans un fichier
+	$file = sous_repertoire(_DIR_TMP,"magiclogin").$desc['id_auteur']."-".$jeton;
+	$pre_signup_infos['email'] = $email;
+	$pre_signup_infos['status'] = $statut;
+	$pre_signup_infos['nom'] = $nom;
+	ecrire_fichier($file,serialize($pre_signup_infos));
+
+	// generer un mail
+	$contexte = $desc;
+	$contexte['nom'] = $nom;
+	$contexte['mode'] = $statut;
+	$contexte['url_confirm'] = generer_url_action('confirm_signup','',true,true);
+	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'email',$desc['email']);
+	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'jeton',$desc['jeton']);
+
+	$message = recuperer_fond('modeles/mail_confirmsignup',$contexte);
+	include_spip("inc/notifications");
+	notifications_envoyer_mails($email,$message);
 }
