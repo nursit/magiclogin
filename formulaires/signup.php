@@ -63,13 +63,11 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 	else {
 		// c'est une fin de signup par une source sociale
 		if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup'])){
-			if (
-				$row = sql_fetsel("*","spip_auteurs","login=".sql_quote($email))
-			  OR $row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email))){
+			if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email))){
 				// c'est un email deja existant en base
 				// on lance une inscription sur cet email
 
-				magiclogin_signup_confirmer_email($statut,$email,$nom,$row,$GLOBALS['visiteur_session']['magiclogin_pre_signup']);
+				magiclogin_signup_confirmer_email($statut,$email,$nom,$row,$GLOBALS['visiteur_session']['magiclogin_pre_signup'],$redirect);
 				$res = array('message_ok' => _T('signup:info_confirmer_email_deja_utilise',array('email'=>$email,"social_source"=>ucfirst($GLOBALS['visiteur_session']['magiclogin_pre_signup']['source']))));
 			}
 			else {
@@ -77,11 +75,12 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 				if ($source
 				  AND include_spip("action/login_with_$source")
 				  AND $signup_with = charger_fonction("signup_with_twitter","magiclogin",true)){
-					$res = $signup_with(array(
-						'email'=>$email,
-						'nom'=>$nom,
-						'statut'=>$statut,
-					));
+					$infos = array(
+					  'email'=>$email,
+					  'nom'=>$nom,
+					  'statut'=>$statut,
+				  );
+					$res = $signup_with($infos,$GLOBALS['visiteur_session']['magiclogin_pre_signup']);
 					if (!isset($res['message_erreur']) AND $redirect)
 						$res['redirect'] = $redirect;
 				}
@@ -107,7 +106,7 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 }
 
 
-function magiclogin_signup_confirmer_email($statut,$email,$nom,$desc,$pre_signup_infos){
+function magiclogin_signup_confirmer_email($statut,$email,$nom,$desc,$pre_signup_infos,$redirect=""){
 	include_spip("action/inscrire_auteur");
 	// attribuer un jeton de confirmation
 	$jeton = auteur_attribuer_jeton($desc['id_auteur']);
@@ -115,7 +114,7 @@ function magiclogin_signup_confirmer_email($statut,$email,$nom,$desc,$pre_signup
 	// stocker les infos de pre_signup dans un fichier
 	$file = sous_repertoire(_DIR_TMP,"magiclogin").$desc['id_auteur']."-".$jeton;
 	$pre_signup_infos['email'] = $email;
-	$pre_signup_infos['status'] = $statut;
+	$pre_signup_infos['statut'] = $statut;
 	$pre_signup_infos['nom'] = $nom;
 	ecrire_fichier($file,serialize($pre_signup_infos));
 
@@ -123,9 +122,10 @@ function magiclogin_signup_confirmer_email($statut,$email,$nom,$desc,$pre_signup
 	$contexte = $desc;
 	$contexte['nom'] = $nom;
 	$contexte['mode'] = $statut;
-	$contexte['url_confirm'] = generer_url_action('confirm_signup','',true,true);
-	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'email',$desc['email']);
-	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'jeton',$desc['jeton']);
+	$contexte['redirect'] = $redirect;
+	$contexte['url_confirm'] = generer_url_action('confirm_signin','',true,true);
+	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'email',$email);
+	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'jeton',$jeton);
 
 	$message = recuperer_fond('modeles/mail_confirmsignup',$contexte);
 	include_spip("inc/notifications");

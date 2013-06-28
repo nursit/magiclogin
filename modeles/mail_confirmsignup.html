@@ -5,27 +5,16 @@
   Distribue sous licence GPL
 
 ][(#HTTP_HEADER{Content-type: text/plain[; charset=(#CHARSET)]})]
-[\[(#NOM_SITE_SPIP|concat{'\] : ',<:form_forum_identifiants:>}|nettoyer_titre_email)]
+#SET{source,#SESSION{magiclogin_pre_signup/source,'email'}|ucfirst}
+<body>
+<title>[\[(#NOM_SITE_SPIP|nettoyer_titre_email)\] : <:signup:titre_mail_confirm_signup{social_source=#GET{source}}|nettoyer_titre_email:>]</title>
 
-<:form_forum_message_auto:>
+[(#SET{nom,[<b>(#ENV{nom})</b>]})]
+<p><:form_forum_bonjour{nom=#GET{nom}}:></p>
 
-<:form_forum_bonjour{nom=#ENV{nom}}:>
+#SET{url_confirm,#ENV{url_confirm}|parametre_url{redirect,#ENV{redirect},'&'}|url_absolue}
+[(#SET{url_confirm,[<br><center>(#INCLURE{fond=emails/inc-button,url=#GET{url_confirm},label=<:signup:bouton_me_connecter:>,width=250px})</center><br>]})]
+<p><:signup:info_finir_inscription_suivre_lien{url_confirm=#GET{url_confirm}}:></p>
 
-#SET{url_confirm,#ENV{url_confirm}|parametre_url{redirect,#ENV{redirect},'&'}}
-<:form_forum_confirmer_email{url_confirm=#GET{url_confirm}}:>
-
-#SET{url_site,#URL_SITE_SPIP/}
-[(#ENV{mode}|=={6forum}|oui)
-#SET{url_login,#URL_PAGE{login}}
-<:form_forum_voici1{nom_site_spip=#NOM_SITE_SPIP,adresse_site=#GET{url_site},adresse_login=#GET{url_login}}:>
-]
-[(#ENV{mode}|=={6forum}|non)
-#SET{url_login,#URL_SITE_SPIP|concat{'/',#EVAL{_DIR_RESTREINT_ABS}}}
-<:form_forum_voici2{nom_site_spip=#NOM_SITE_SPIP,adresse_site=#GET{url_site},adresse_login=#GET{url_login}}:>
-]
-
-
-- <:form_forum_login:>[ (#ENV{email,email})]
-
-
-#FILTRE{supprimer_tags|filtrer_entites|trim}
+</body>
+#FILTRE{facteur_email_wrap_to_html}

@@ -11,8 +11,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_email' => 'Courriel (<span lang="en">email</span>)',
 	'bouton_terminer' => 'Terminer',
 	'info_signup_ok' => 'Votre compte a bien été créé !',
-	'info_confirmer_email_deja_utilise' => 'Un compte avec l\' adresse email <b>@email@</b> existe déjà.<br />
-Vous allez recevoir un email avec un lien de confirmation pour y associer votre compte <b>@social_source@</b> et vous y connecter.',
+	'info_confirmer_email_deja_utilise' => 'Vous êtes déjà inscrit avec l\' adresse <b>@email@</b>.<br />
+Vous allez recevoir un email avec un lien de confirmation pour finir de vous connecter et associer votre compte <b>@social_source@</b>.',
+
+	'titre_mail_confirm_signup' => 'Connexion avec @social_source@',
+	'bouton_me_connecter' => 'Me connecter',
+	'info_finir_inscription_suivre_lien' => 'Pour finir votre identification, suivez ce lien : @url_confirm@',
+	'confirmsignup_titre_email' => 'Terminer votre identification',
 );
 
 ?>

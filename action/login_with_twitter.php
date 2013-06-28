@@ -98,15 +98,19 @@ function magiclogin_informer_twitteraccount($tokens){
 }
 
 
-function magiclogin_signup_with_twitter_dist($infos){
+function magiclogin_signup_with_twitter_dist($infos, $pre_signup_infos){
 	$desc = array(
 		'nom'=>$infos['nom'],
 		'email'=>$infos['email'],
-		'bio'=>$GLOBALS['visiteur_session']['magiclogin_pre_signup']['bio'],
 		'login'=>$infos['email'],
-		'twitter_token'=>$GLOBALS['visiteur_session']['magiclogin_pre_signup']['twitter_token'],
-		'twitter_token_secret'=>$GLOBALS['visiteur_session']['magiclogin_pre_signup']['twitter_token_secret'],
+		'twitter_token'=>$pre_signup_infos['twitter_token'],
+		'twitter_token_secret'=>$pre_signup_infos['twitter_token_secret'],
 	);
+	if (isset($infos['id_auteur']))
+		$desc['id_auteur'] = $infos['id_auteur'];
+
+	if (isset($pre_signup_infos['bio']) AND $pre_signup_infos['bio'])
+		$desc['bio'] = $pre_signup_infos['bio'];
 
 	include_spip("action/inscrire_auteur");
 	$desc = inscription_nouveau($desc);
@@ -116,6 +120,20 @@ function magiclogin_signup_with_twitter_dist($infos){
 		auteur_modifier($desc['id_auteur'], array('statut'=>$desc['statut']=$infos['statut']));
 		autoriser_exception('modifier','auteur',$desc['id_auteur'],false);
 	}
+
+	// l'auteur a-t-il un logo ?
+	if (isset($pre_signup_infos['logo'])){
+		$chercher_logo = charger_fonction("chercher_logo","inc");
+		if (!$chercher_logo($desc['id_auteur'],"id_auteur")){
+			include_spip("inc/distant");
+			$copie = _DIR_RACINE . copie_locale($pre_signup_infos['logo'],'modif');
+			$parts = pathinfo($copie);
+			if (in_array($parts['extension'],array('gif','png','jpg'))){
+				@rename($copie,_DIR_IMG . "auton".$desc['id_auteur'].".".$parts['extension']);
+			}
+		}
+	}
+
 
 	// erreur ?
 	if (is_string($desc)){

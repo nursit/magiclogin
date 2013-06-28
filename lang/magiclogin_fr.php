@@ -13,8 +13,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'cfg_exemple_explication' => 'Explication de cet exemple',
 	'cfg_titre_parametrages' => 'Paramétrages',
 
-	'info_page_signup' => 'C\'est la première fois que vous vous connectez.<br />
-Nous avons juste besoin de quelques informations pour finir la création de votre compte.',
+	'info_page_signup' => 'C\'est la première fois que vous vous connectez avec <b>@social_source@</b>.<br />
+Nous avons juste besoin de quelques informations pour vous identifier.',
 
 	// T
 	'titre_page_configurer_magiclogin' => 'Configuration de MagicLogin',

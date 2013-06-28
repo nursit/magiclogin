@@ -45,7 +45,7 @@ function magiclogin_upgrade($nom_meta_base_version, $version_cible) {
 		array('sql_alter',"TABLE spip_auteurs ADD twitter_token_secret VARCHAR(255) DEFAULT '' NOT NULL"),
 	);
 
-	$maj['0.1.0'] = array(
+	$maj['0.1.1'] = array(
 		array('sql_alter',"TABLE spip_auteurs ADD twitter_token VARCHAR(255) DEFAULT '' NOT NULL"),
 		array('sql_alter',"TABLE spip_auteurs ADD twitter_token_secret VARCHAR(255) DEFAULT '' NOT NULL"),
 	);
