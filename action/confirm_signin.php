@@ -45,8 +45,12 @@ function action_confirm_signin_dist() {
 				  'email'=>$auteur['email'],
 				  'nom'=>$auteur['nom'],
 			  );
+
+				$current_statut = $auteur['statut'];
+				if ($current_statut=="nouveau")
+					$current_statut = $auteur['prefs'];
 				if (isset($pre_signup_infos['statut'])
-				  AND intval($pre_signup_infos['statut'])>intval($auteur['statut']))
+				  AND intval($pre_signup_infos['statut'])<=intval($current_statut))
 					$infos['statut'] = $pre_signup_infos['statut'];
 				$res = $signup_with($infos,$pre_signup_infos);
 			}
