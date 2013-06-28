@@ -14,6 +14,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 /**
  * S'identifier via Twitter
+ *   Lancer l'authorisation puis recuperer les tokens
  * @param bool $is_callback
  * @param string $redirect
  * @return null|string
@@ -96,4 +97,36 @@ function magiclogin_informer_twitteraccount($tokens){
 	return $infos;
 }
 
+
+function magiclogin_signup_with_twitter_dist($infos){
+	$desc = array(
+		'nom'=>$infos['nom'],
+		'email'=>$infos['email'],
+		'bio'=>$GLOBALS['visiteur_session']['magiclogin_pre_signup']['bio'],
+		'login'=>$infos['email'],
+		'twitter_token'=>$GLOBALS['visiteur_session']['magiclogin_pre_signup']['twitter_token'],
+		'twitter_token_secret'=>$GLOBALS['visiteur_session']['magiclogin_pre_signup']['twitter_token_secret'],
+	);
+
+	include_spip("action/inscrire_auteur");
+	$desc = inscription_nouveau($desc);
+	if (is_array($desc)
+		AND isset($infos['statut'])){
+		autoriser_exception('modifier','auteur',$desc['id_auteur']);
+		auteur_modifier($desc['id_auteur'], array('statut'=>$desc['statut']=$infos['statut']));
+		autoriser_exception('modifier','auteur',$desc['id_auteur'],false);
+	}
+
+	// erreur ?
+	if (is_string($desc)){
+		return array('message_erreur'=> $desc);
+	}
+	// OK
+	else{
+		include_spip("inc/auth");
+		auth_loger($desc);
+		// super on a reussi : on loge l'auteur !
+		return array('message_ok' => _T('signup:info_signup_ok'), 'id_auteur' => $desc['id_auteur']);
+	}
+}
 ?>

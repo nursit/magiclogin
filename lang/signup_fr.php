@@ -10,6 +10,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_nom' => 'Pseudo',
 	'label_email' => 'Courriel (<span lang="en">email</span>)',
 	'bouton_terminer' => 'Terminer',
+	'info_signup_ok' => 'Votre compte a bien été créé !',
 );
 
 ?>
