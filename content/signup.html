@@ -1,5 +1,5 @@
-<h1>Bonjour[ <small>(#SESSION{magiclogin_pre_signup/nom})</small>]</h1>
-<p>C'est la première fois que vous vous connectez.<br />
-Nous avons juste besoin de quelques informations pour finir la création de votre compte.</p>
+[(#SET{nom,[ <small>(#SESSION{magiclogin_pre_signup/nom,''})</small>]})]
+<h1><:magiclogin:titre_page_signup{nom=#GET{nom}}:></h1>
+<p><:magiclogin:info_page_signup:></p>
 
 #FORMULAIRE_SIGNUP

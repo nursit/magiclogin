@@ -12,6 +12,22 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
+
+/**
+ * Table principale
+ * champs token pour twitter sur les auteurs
+ *
+ * @param array $tables
+ * @return array
+ */
+function magiclogin_declarer_tables_objets_sql($tables) {
+	$tables['spip_auteurs']['field']['twitter_token'] = "VARCHAR(255) DEFAULT '' NOT NULL";
+	$tables['spip_auteurs']['field']['twitter_token_secret'] = "VARCHAR(255) DEFAULT '' NOT NULL";
+
+	return $tables;
+}
+
+
 /**
  * Fonction d'installation et de mise à jour du plugin MagicLogin.
  *
@@ -23,6 +39,16 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 **/
 function magiclogin_upgrade($nom_meta_base_version, $version_cible) {
 	$maj = array();
+
+	$maj['create'] = array(
+		array('sql_alter',"TABLE spip_auteurs ADD twitter_token VARCHAR(255) DEFAULT '' NOT NULL"),
+		array('sql_alter',"TABLE spip_auteurs ADD twitter_token_secret VARCHAR(255) DEFAULT '' NOT NULL"),
+	);
+
+	$maj['0.1.0'] = array(
+		array('sql_alter',"TABLE spip_auteurs ADD twitter_token VARCHAR(255) DEFAULT '' NOT NULL"),
+		array('sql_alter',"TABLE spip_auteurs ADD twitter_token_secret VARCHAR(255) DEFAULT '' NOT NULL"),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

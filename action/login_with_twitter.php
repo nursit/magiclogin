@@ -75,6 +75,7 @@ function magiclogin_informer_twitteraccount($tokens){
 
 		include_spip("inc/twitter");
 		$infos = array();
+		$infos['source'] = "twitter";
 		$infos['twitter_token'] = $tokens['twitter_token'];
 		$infos['twitter_token_secret'] = $tokens['twitter_token_secret'];
 
