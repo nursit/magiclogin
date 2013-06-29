@@ -15,6 +15,8 @@
 
 	<licence>GNU/GPL</licence>
 	<pipeline nom="insert_head" inclure="magiclogin_fonctions.php" />
+	<pipeline nom="insert_head_css" inclure="magiclogin_fonctions.php" />
+	<pipeline nom="formulaire_fond" inclure="magiclogin_fonctions.php" />
 
 
 	<necessite nom="twitter" compatibilite="[1.1.1;]" />

@@ -12,6 +12,16 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 /**
+ * Inserer la css de Persona dans le head
+ * @param string $flux
+ * @return string
+ */
+function magiclogin_insert_head_css($flux){
+	$flux .= '<link rel="stylesheet"  href="'.find_in_path("css/magiclogin.css").'" type="text/css"></script>';
+	return $flux;
+}
+
+/**
  * Inserer le javascript de Persona dans le head
  * @param string $flux
  * @return string
@@ -103,5 +113,26 @@ function magiclogin_masquer_secret($secret){
 	if (strlen($secret))
 		$affiche = substr($secret,0,4).str_pad("*",strlen($secret)-8,"*").substr($secret,-4);
 	return $affiche;
+}
+
+/**
+ * Ajouter les liens de login rapide dans le form de login
+ * @param $flux
+ * @return mixed
+ */
+function magiclogin_formulaire_fond($flux){
+	// determiner le nom du formulaire
+	$form = $flux['args']['form'];
+	if ($form=="login") {
+		$links = magiclogin_login_links(_request('url'));
+		// trouver le dernier fieldset, puis le premier input apres : c'est le bouton
+		$pf = strripos($flux['data'],"</fieldset>");
+		if ($pi = stripos($flux['data'],"<input",$pf)
+		  OR $pi = stripos($flux['data'],"<button",$pf)){
+			$flux['data'] = substr_replace($flux['data'],$links,$pi,0);
+		}
+	}
+
+	return $flux;
 }
 ?>
