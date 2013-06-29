@@ -9,7 +9,22 @@
 	<div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 
-		<input type="hidden" name="_meta_casier" value="magiclogin" />
+		<fieldset class="api[(#GET{api_ok}|et{#GET{api_erreur}|non})]none">
+			<legend><:magiclogin:legend_api_facebook:></legend>
+			<p class="explication"><:magiclogin:explication_facebook_api_oauth:></p>
+			<ul class="compte">
+				<li class="editer_facebook_consumer_key facebook_conf[(#GET{api_erreur})erreur]">
+					<label for="facebook_consumer_key"><:magiclogin:label_facebook_consumer_key:></label>[(#GET{api_erreur})
+					<span class='erreur_message'>Verifiez la configuration de l'application</span>
+					]<input type="text" name="facebook_consumer_key" value="[(#ENV{facebook_consumer_key})]" id="facebook_consumer_key" class="text" />
+				</li>
+				<li class="editer_facebook_consumer_secret facebook_conf[(#GET{api_erreur})erreur]">
+					<label for="facebook_consumer_secret"><:magiclogin:label_facebook_consumer_secret:></label>
+					<input type="text" name="facebook_consumer_secret" value="[(#ENV{facebook_consumer_secret}|=={#CONFIG{magiclogin/facebook_consumer_secret}}|?{'',#ENV{facebook_consumer_secret}})]" id="facebook_consumer_secret" class="text" />
+					[<em><tt>(#CONFIG{magiclogin/facebook_consumer_secret}|magiclogin_masquer_secret)</tt></em>]
+				</li>
+			</ul>
+		</fieldset>
 		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
 	</div>
 	</form>

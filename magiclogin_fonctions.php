@@ -64,4 +64,10 @@ function magiclogin_logout_link($target_url=''){
 }
 
 
+function magiclogin_masquer_secret($secret){
+	$affiche = "";
+	if (strlen($secret))
+		$affiche = substr($secret,0,4).str_pad("*",strlen($secret)-8,"*").substr($secret,-4);
+	return $affiche;
+}
 ?>
