@@ -1,4 +1,4 @@
-<span class="login_links"><:lien_connecter:> avec :
+<span class="login-links"><:lien_connecter:> avec :
 	<span class="with-fb">
 		<a href="[(#URL_ACTION{login}|parametre_url{with,facebook}|parametre_url{redirect,#ENV{url}})]" class="fb" rel="nofollow">Facebook</a><span class="sep"> | </span>
 	</span>
@@ -6,7 +6,7 @@
 		<a href="[(#URL_ACTION{login}|parametre_url{with,twitter}|parametre_url{redirect,#ENV{url}})]" class="twitter" rel="nofollow">Twitter</a><span class="sep"> | </span>
 	</span>
 	<span class="with-persona">
-		<a href="#" onclick="magiclogin_persona.start('[(#URL_ACTION{login}|parametre_url{with,persona}|parametre_url{redirect,#ENV{url}})]');return false;" class="email" rel="nofollow">Email</a>
+		<a href="#" onclick="magiclogin_persona.start('[(#URL_ACTION{login}|parametre_url{with,persona}|parametre_url{redirect,#ENV{url}})]',this);return false;" class="email" rel="nofollow">Email</a>
 	</span>
 	<span class="login-messages"></span>
 </span>

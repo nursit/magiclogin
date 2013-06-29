@@ -13,22 +13,35 @@ var magiclogin_persona = {
 		message_js_authorize_popup:'',
 		message_js_unexpected_error:''
 	},
+	display:null,
 
 	/**
 	 * Afficher un message de service
 	 */
-	message: function(m) {
-		if (!jQuery('.login-messages').length)
-			jQuery('.login-links').prepend("<span class='login-messages'></span>");
-		jQuery('.login-messages').html(m);
+	message: function(m,node) {
+		if (!this.display){
+			if (node){
+				var l = jQuery(node).closest(".login-links");
+				if (jQuery('.login-messages',l).length)
+					this.display = jQuery('.login-messages',l);
+				else this.display = l.prepend("<span class='login-messages'></span>");
+			}
+			else {
+				if (!jQuery('.login-messages').length)
+					this.display = jQuery('.login-links').prepend("<span class='login-messages'></span>");
+				else
+					this.display = jQuery('.login-messages');
+			}
+		}
+		this.display.html(m);
 	},
 
 
-	start: function(url_verify) {
+	start: function(url_verify, node) {
 		if (!url_verify)
-			this.message(this.messages.message_js_appel_incorrect);
+			this.message(this.messages.message_js_appel_incorrect, node);
 		this.url_verify = url_verify;
-		this.message(this.messages.message_js_connecting);
+		this.message(this.messages.message_js_connecting, node);
 		jQuery.getScript("https://login.persona.org/include.js",function(){
 			magiclogin_persona.login();
 		})
@@ -63,10 +76,10 @@ var magiclogin_persona = {
 	 * Fonction appelee quand on a reussi a se connecter
 	 */
 	welcome: function(e) {
-	  console.log(e);
+	  //console.log(e);
 	  if (e.status == "okay") {
 		  if (e.message) {
-        this.message(e.message);
+			  magiclogin_persona.message(e.message);
       }
 		  if (e.redirect)
 			  window.location = e.redirect;
