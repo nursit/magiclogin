@@ -25,6 +25,12 @@ function formulaires_signup_charger_dist($statut="6forum", $redirect=""){
 		'_logo' => '',
 	);
 
+	// si l'email fourni par le social login, on a pas le droit de le changer
+	if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup']['email'])){
+		$valeurs['email'] = $GLOBALS['visiteur_session']['magiclogin_pre_signup']['email'];
+		$valeurs['_email_readonly'] = true;
+	}
+
 	if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup']['nom']))
 		$valeurs['nom'] = $GLOBALS['visiteur_session']['magiclogin_pre_signup']['nom'];
 	if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup']['logo']))
