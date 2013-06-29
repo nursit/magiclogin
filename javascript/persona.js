@@ -7,6 +7,12 @@
 
 var magiclogin_persona = {
 	url_verify:"",
+	messages:{
+		message_js_appel_incorrect:'',
+		message_js_connecting:'',
+		message_js_authorize_popup:'',
+		message_js_unexpected_error:''
+	},
 
 	/**
 	 * Afficher un message de service
@@ -20,9 +26,9 @@ var magiclogin_persona = {
 
 	start: function(url_verify) {
 		if (!url_verify)
-			this.message("Appel mal formé.");
+			this.message(this.messages.message_js_appel_incorrect);
 		this.url_verify = url_verify;
-		this.message("Connexion persona en cours…");
+		this.message(this.messages.message_js_connecting);
 		jQuery.getScript("https://login.persona.org/include.js",function(){
 			magiclogin_persona.login();
 		})
@@ -33,7 +39,7 @@ var magiclogin_persona = {
 	 */
 	login: function() {
 		navigator.id.get(magiclogin_persona.verify_server);
-		this.message("Veuillez autoriser les popups");
+		this.message(magiclogin_persona.messages.message_js_authorize_popup);
 	},
 
 	/*
@@ -69,7 +75,7 @@ var magiclogin_persona = {
 	    }
 	  }
 	  else {
-		  magiclogin_persona.message('something was wrong: '+(e.reason || ""));
+		  magiclogin_persona.message(magiclogin_persona.messages.message_js_unexpected_error + (e.reason || ""));
 	  }
 	}
 }
