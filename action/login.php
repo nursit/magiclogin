@@ -15,7 +15,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 function action_login_dist() {
 
 	if (!isset($GLOBALS['visiteur_session']['statut'])
-	  OR !$GLOBALS['visiteur_session']['statut']){
+	  OR !$GLOBALS['visiteur_session']['statut']
+	  OR $with = "persona"){
 
 		$with = _request('with');
 		$login_with = charger_fonction("login_with_$with","action");
