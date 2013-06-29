@@ -79,8 +79,10 @@ function action_login_with_persona_dist() {
 					include_spip("inc/auth");
 					auth_loger($auteur);
 					// et voila
-					if (_request('redirect'))
+					if (_request('redirect')){
 						$res['redirect'] = _request('redirect');
+						$res['message'] = _T('persona:message_succes_redirige');
+					}
 				}
 			}
 			else {
@@ -92,7 +94,7 @@ function action_login_with_persona_dist() {
 
 	header('Content-Type: text/json; charset=utf-8');
 	echo json_encode($res);
-	exit;
+	die();
 }
 
 
