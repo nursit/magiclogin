@@ -37,23 +37,20 @@ function action_confirm_signin_dist() {
 				unset($pre_signup_infos['bio']);
 
 			$source = $pre_signup_infos['source'];
-			if ($source
-			  AND include_spip("action/login_with_$source")
-			  AND $signup_with = charger_fonction("signup_with_twitter","magiclogin",true)){
-				$infos = array(
-					'id_auteur'=>$auteur['id_auteur'],
-				  'email'=>$auteur['email'],
-				  'nom'=>$auteur['nom'],
-			  );
+			$infos = array(
+				'id_auteur'=>$auteur['id_auteur'],
+			  'email'=>$auteur['email'],
+			  'nom'=>$auteur['nom'],
+		  );
+			$current_statut = $auteur['statut'];
+			if ($current_statut=="nouveau")
+				$current_statut = $auteur['prefs'];
+			if (isset($pre_signup_infos['statut'])
+			  AND intval($pre_signup_infos['statut'])<=intval($current_statut))
+				$infos['statut'] = $pre_signup_infos['statut'];
 
-				$current_statut = $auteur['statut'];
-				if ($current_statut=="nouveau")
-					$current_statut = $auteur['prefs'];
-				if (isset($pre_signup_infos['statut'])
-				  AND intval($pre_signup_infos['statut'])<=intval($current_statut))
-					$infos['statut'] = $pre_signup_infos['statut'];
-				$res = $signup_with($infos,$pre_signup_infos);
-			}
+			include_spip("formulaires/signup");
+			$res = magiclogin_finish_signup($source, $infos, $pre_signup_infos);
 		}
 
 		// on le loge => ca va confirmer son statut (si besoin) et c'est plus sympa

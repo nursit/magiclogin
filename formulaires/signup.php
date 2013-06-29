@@ -72,21 +72,15 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 			}
 			else {
 				$source = $GLOBALS['visiteur_session']['magiclogin_pre_signup']['source'];
-				if ($source
-				  AND include_spip("action/login_with_$source")
-				  AND $signup_with = charger_fonction("signup_with_twitter","magiclogin",true)){
-					$infos = array(
-					  'email'=>$email,
-					  'nom'=>$nom,
-					  'statut'=>$statut,
-				  );
-					$res = $signup_with($infos,$GLOBALS['visiteur_session']['magiclogin_pre_signup']);
-					if (!isset($res['message_erreur']) AND $redirect)
-						$res['redirect'] = $redirect;
-				}
-				else {
-					$res['message_erreur'] = "Unknown signup source";
-				}
+				$infos = array(
+				  'email'=>$email,
+				  'nom'=>$nom,
+				  'statut'=>$statut,
+			  );
+				$res = magiclogin_finish_signup($source, $infos, $GLOBALS['visiteur_session']['magiclogin_pre_signup']);
+				// redirect dans tous les cas pour montrer qu'on est loge
+				if (!isset($res['message_erreur']))
+					$res['redirect'] = ($redirect?$redirect:self());
 			}
 		}
 		// c'est un signup direct
@@ -130,4 +124,82 @@ function magiclogin_signup_confirmer_email($statut,$email,$nom,$desc,$pre_signup
 	$message = recuperer_fond('modeles/mail_confirmsignup',$contexte);
 	include_spip("inc/notifications");
 	notifications_envoyer_mails($email,$message);
+}
+
+
+/**
+ * Finir l'inscription sociale
+ * @param string $source
+ *   source dont sont issues les infos et qui sert a peupler la table auteur
+ * @param $infos
+ *   infos dispo
+ * @param $pre_signup_infos
+ *   infos issues du reseau social
+ * @return array
+ */
+function magiclogin_finish_signup($source, $infos, $pre_signup_infos){
+	$desc = array(
+		'nom'=>$infos['nom'],
+		'email'=>$infos['email'],
+		'login'=>$infos['email'],
+	);
+
+	if ($source
+	  AND include_spip("action/login_with_$source")
+	  AND $signup_with = charger_fonction("signup_with_$source","magiclogin",true)){
+		$desc = $signup_with($desc,$pre_signup_infos);
+	}
+	else
+		return array('message_erreur' => "Unknown signup source");
+
+	if (isset($pre_signup_infos['bio']) AND $pre_signup_infos['bio'])
+		$desc['bio'] = $pre_signup_infos['bio'];
+
+	if (isset($infos['id_auteur'])){
+		if (isset($infos['statut']))
+			$desc['statut'] = $infos['statut'];
+
+		include_spip('inc/autoriser');
+		include_spip("action/editer_auteur");
+		// lever l'autorisation pour pouvoir modifier le statut
+		autoriser_exception('modifier','auteur',$infos['id_auteur']);
+		auteur_modifier($infos['id_auteur'], $desc);
+		autoriser_exception('modifier','auteur',$infos['id_auteur'],false);
+	}
+	else {
+		include_spip("action/inscrire_auteur");
+		$desc = inscription_nouveau($desc);
+		if (is_array($desc)
+			AND isset($infos['statut'])){
+			autoriser_exception('modifier','auteur',$desc['id_auteur']);
+			auteur_modifier($desc['id_auteur'], array('statut'=>$desc['statut']=$infos['statut']));
+			autoriser_exception('modifier','auteur',$desc['id_auteur'],false);
+		}
+	}
+
+	// l'auteur a-t-il un logo ?
+	if (isset($pre_signup_infos['logo'])){
+		$chercher_logo = charger_fonction("chercher_logo","inc");
+		if (!$chercher_logo($desc['id_auteur'],"id_auteur")){
+			include_spip("inc/distant");
+			$copie = _DIR_RACINE . copie_locale($pre_signup_infos['logo'],'modif');
+			$parts = pathinfo($copie);
+			if (in_array($parts['extension'],array('gif','png','jpg'))){
+				@rename($copie,_DIR_IMG . "auton".$desc['id_auteur'].".".$parts['extension']);
+			}
+		}
+	}
+
+
+	// erreur ?
+	if (is_string($desc)){
+		return array('message_erreur'=> $desc);
+	}
+	// OK
+	else{
+		include_spip("inc/auth");
+		auth_loger($desc);
+		// super on a reussi : on loge l'auteur !
+		return array('message_ok' => _T('signup:info_signup_ok'), 'id_auteur' => $desc['id_auteur']);
+	}
 }

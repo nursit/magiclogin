@@ -1,6 +1,6 @@
 <?php
 /**
- * Fichier gérant le routage du login vers le bon service
+ * Fichier gérant le login avec Twitter
  *
  * @plugin     MagicLogin
  * @copyright  2013
@@ -98,53 +98,9 @@ function magiclogin_informer_twitteraccount($tokens){
 }
 
 
-function magiclogin_signup_with_twitter_dist($infos, $pre_signup_infos){
-	$desc = array(
-		'nom'=>$infos['nom'],
-		'email'=>$infos['email'],
-		'login'=>$infos['email'],
-		'twitter_token'=>$pre_signup_infos['twitter_token'],
-		'twitter_token_secret'=>$pre_signup_infos['twitter_token_secret'],
-	);
-	if (isset($infos['id_auteur']))
-		$desc['id_auteur'] = $infos['id_auteur'];
-
-	if (isset($pre_signup_infos['bio']) AND $pre_signup_infos['bio'])
-		$desc['bio'] = $pre_signup_infos['bio'];
-
-	include_spip("action/inscrire_auteur");
-	$desc = inscription_nouveau($desc);
-	if (is_array($desc)
-		AND isset($infos['statut'])){
-		autoriser_exception('modifier','auteur',$desc['id_auteur']);
-		auteur_modifier($desc['id_auteur'], array('statut'=>$desc['statut']=$infos['statut']));
-		autoriser_exception('modifier','auteur',$desc['id_auteur'],false);
-	}
-
-	// l'auteur a-t-il un logo ?
-	if (isset($pre_signup_infos['logo'])){
-		$chercher_logo = charger_fonction("chercher_logo","inc");
-		if (!$chercher_logo($desc['id_auteur'],"id_auteur")){
-			include_spip("inc/distant");
-			$copie = _DIR_RACINE . copie_locale($pre_signup_infos['logo'],'modif');
-			$parts = pathinfo($copie);
-			if (in_array($parts['extension'],array('gif','png','jpg'))){
-				@rename($copie,_DIR_IMG . "auton".$desc['id_auteur'].".".$parts['extension']);
-			}
-		}
-	}
-
-
-	// erreur ?
-	if (is_string($desc)){
-		return array('message_erreur'=> $desc);
-	}
-	// OK
-	else{
-		include_spip("inc/auth");
-		auth_loger($desc);
-		// super on a reussi : on loge l'auteur !
-		return array('message_ok' => _T('signup:info_signup_ok'), 'id_auteur' => $desc['id_auteur']);
-	}
+function magiclogin_signup_with_twitter_dist($desc, $pre_signup_infos){
+	$desc['twitter_token'] = $pre_signup_infos['twitter_token'];
+	$desc['twitter_token_secret'] = $pre_signup_infos['twitter_token_secret'];
+	return $desc;
 }
 ?>
