@@ -11,11 +11,22 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+/**
+ * Inserer le javascript de Persona dans le head
+ * @param string $flux
+ * @return string
+ */
 function magiclogin_insert_head($flux){
 	$flux .= '<script src="'.find_in_path("javascript/persona.js").'" type="text/javascript"></script>';
 	return $flux;
 }
 
+/**
+ * Balise #LOGIN_LINKS qui affiche les liens de connexion si on est pas deja identifie
+ *
+ * @param $p
+ * @return mixed
+ */
 function balise_LOGIN_LINKS_dist($p) {
 	$_target_url = interprete_argument_balise(1,$p);
 
@@ -28,6 +39,11 @@ function balise_LOGIN_LINKS_dist($p) {
 	return $p;
 }
 
+/**
+ * Fonction appelee par la balise #LOGIN_LINKS, par commodite
+ * @param string $target_url
+ * @return array|string
+ */
 function magiclogin_login_links($target_url=''){
 	// if already connected : empty return
 	if (isset($GLOBALS['visiteur_session']['statut'])
@@ -42,6 +58,11 @@ function magiclogin_login_links($target_url=''){
 }
 
 
+/**
+ * Balise #LOGOUT_LINK qui affiche le lien de deconexion si on est identifie
+ * @param $p
+ * @return mixed
+ */
 function balise_LOGOUT_LINK_dist($p) {
 	$_target_url = interprete_argument_balise(1,$p);
 
@@ -54,6 +75,11 @@ function balise_LOGOUT_LINK_dist($p) {
 	return $p;
 }
 
+/**
+ * Fonction appelee par la balise #LOGOUT_LINK par commodite
+ * @param string $target_url
+ * @return array|string
+ */
 function magiclogin_logout_link($target_url=''){
 	// if not connected : empty return
 	if (!isset($GLOBALS['visiteur_session']['statut'])
@@ -67,7 +93,11 @@ function magiclogin_logout_link($target_url=''){
 	return recuperer_fond("inclure/logout_link",array('url'=>$target_url));
 }
 
-
+/**
+ * Filtre pour afficher une partie du code secret de l'app FB (plus pratique que input type="password"
+ * @param string $secret
+ * @return string
+ */
 function magiclogin_masquer_secret($secret){
 	$affiche = "";
 	if (strlen($secret))
