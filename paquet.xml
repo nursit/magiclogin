@@ -1,7 +1,7 @@
 <paquet
 	prefix="magiclogin"
 	categorie="auteur"
-	version="0.3.2"
+	version="0.4.0"
 	etat="dev"
 	compatibilite="[3.0.0;3.0.*]"
 	logo="prive/themes/spip/images/magiclogin-32.png"
@@ -15,6 +15,7 @@
 
 	<licence>GNU/GPL</licence>
 	<pipeline nom="autoriser" inclure="magiclogin_autorisations.php" /> 
+	<pipeline nom="insert_head" inclure="magiclogin_fonctions.php" />
 
 
 	<necessite nom="twitter" compatibilite="[1.1.1;]" />

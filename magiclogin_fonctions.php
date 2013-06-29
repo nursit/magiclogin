@@ -11,6 +11,10 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+function magiclogin_insert_head($flux){
+	$flux .= '<script src="'.find_in_path("javascript/persona.js").'" type="text/javascript"></script>';
+	return $flux;
+}
 
 function balise_LOGIN_LINKS_dist($p) {
 	$_target_url = interprete_argument_balise(1,$p);
