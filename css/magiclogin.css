@@ -10,3 +10,5 @@
 .formulaire_login .login-links {float: left;text-align: left}
 .login-links .login-messages {display: block;text-align: left}
 .login-links .login-messages.on {background: #333;color:#fff;padding:3px 5px;font-weight: normal;}
+
+.formulaire_signup .spip_logos {float:right;max-width: 50px;height: auto;}
