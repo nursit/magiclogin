@@ -40,10 +40,13 @@ function magiclogin_insert_head($flux){
 function balise_LOGIN_LINKS_dist($p) {
 	$_target_url = interprete_argument_balise(1,$p);
 
-	if (!$_target_url)
-		$_target_url = "''";
+	if (!$_target_url AND $_target_url!="''"){
+		$_target_url = "";
+	}
+	else
+		$_target_url = "\''.addslashes($_target_url).'\'";
 
-	$p->code = "'<' . '"."?php echo magiclogin_login_links(\''.addslashes($_target_url).'\'); ?'.'>'";
+	$p->code = "'<' . '"."?php echo magiclogin_login_links($_target_url); ?'.'>'";
 
 	$p->interdire_scripts = false;
 	return $p;
@@ -60,10 +63,6 @@ function magiclogin_login_links($target_url=''){
 	  AND $GLOBALS['visiteur_session']['statut'])
 		return '';
 
-	// if no target url, back on same page
-	if (!$target_url)
-		$target_url = self();
-
 	return recuperer_fond("inclure/login_links",array('url'=>$target_url));
 }
 
@@ -76,10 +75,13 @@ function magiclogin_login_links($target_url=''){
 function balise_LOGOUT_LINK_dist($p) {
 	$_target_url = interprete_argument_balise(1,$p);
 
-	if (!$_target_url)
-		$_target_url = "''";
+	if (!$_target_url AND $_target_url!="''"){
+		$_target_url = "";
+	}
+	else
+		$_target_url = "\''.addslashes($_target_url).'\'";
 
-	$p->code = "'<' . '"."?php echo magiclogin_logout_link(\''.addslashes($_target_url).'\'); ?'.'>'";
+	$p->code = "'<' . '"."?php echo magiclogin_logout_link($_target_url); ?'.'>'";
 
 	$p->interdire_scripts = false;
 	return $p;
@@ -95,10 +97,6 @@ function magiclogin_logout_link($target_url=''){
 	if (!isset($GLOBALS['visiteur_session']['statut'])
 	  OR !$GLOBALS['visiteur_session']['statut'])
 		return '';
-
-	// if no target url, back on same page
-	if (!$target_url)
-		$target_url = self();
 
 	return recuperer_fond("inclure/logout_link",array('url'=>$target_url));
 }
