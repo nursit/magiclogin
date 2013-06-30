@@ -64,7 +64,7 @@ function action_login_with_facebook_dist() {
 
 		// au premier appel
 		// si pas deja loge, et si pas en retour de login, lancer la demande
-		if (!$user_id AND !_request('code')){
+		if (!$user_id AND !_request('code') AND !_request('callback')){
 
 			/**
 			 * L'URL de callback qui sera utilisée suite à la validation chez FB
@@ -72,7 +72,7 @@ function action_login_with_facebook_dist() {
 			 */
 			$oauth_callback = url_absolue(generer_url_action('login_with_facebook','callback=1',true));
 
-			$loginUrl = $facebook->getLoginUrl(array('redirect_uri'=>$oauth_callback,'response_type'=>'code token'));
+			$loginUrl = $facebook->getLoginUrl(array('redirect_uri'=>$oauth_callback,'response_type'=>'code'/*,'scope'=>'email'*/));
 			$GLOBALS['redirect'] = $loginUrl;
 
 			if (_request('redirect')){
@@ -94,7 +94,7 @@ function action_login_with_facebook_dist() {
 				  'state' => string '8e3d0d786767d320a65e7dd5687067a9' (length=32)
 			 */
 			if (_request("error")){
-				spip_log("FB Login error : "._request("error")."|"._request("error_description")."|"._request("error_reason"),"magiclogin"._LOG_ERROR);
+				spip_log("FB Login error : "._request("error")."|"._request("error_description")."|"._request("error_reason"),"magiclogin"._LOG_ERREUR);
 			}
 			/* Succes :
 			$_GET = array
@@ -104,7 +104,7 @@ function action_login_with_facebook_dist() {
 			  'state' => string '8e3d0d786767d320a65e7dd5687067a9' (length=32)
 			*/
 			else {
-				spip_log("FB Login innatendu : ".var_export($_GET,true),"magiclogin"._LOG_ERROR);
+				spip_log("FB Login innatendu : ".var_export($_GET,true),"magiclogin"._LOG_ERREUR);
 			}
 		}
 	}
@@ -125,7 +125,7 @@ function magiclogin_informer_facebookaccount($user_id,&$facebook){
 	// chercher l'auteur avec ce user_id facebook
 	if (!$infos = sql_fetsel("*",
 		  "spip_auteurs",
-		  "facebook_id=".sql_quote($user_id,'','varchar'))){
+		  "statut!=".sql_quote('5poubelle')." AND facebook_id=".sql_quote($user_id,'','varchar'))){
 
 		// si pas trouve, on pre - rempli avec les infos de FB
 		$infos = array();

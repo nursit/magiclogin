@@ -76,7 +76,7 @@ function magiclogin_informer_twitteraccount($tokens){
 	// chercher l'auteur avec ces tokens
 	if (!$infos = sql_fetsel("*",
 		  "spip_auteurs",
-		  "twitter_token=".sql_quote($tokens['twitter_token'])." AND twitter_token_secret=".sql_quote($tokens['twitter_token_secret']))){
+		  "statut!=".sql_quote('5poubelle')."AND twitter_token=".sql_quote($tokens['twitter_token'])." AND twitter_token_secret=".sql_quote($tokens['twitter_token_secret']))){
 
 		include_spip("inc/twitter");
 		$infos = array();

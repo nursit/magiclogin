@@ -46,7 +46,10 @@ function action_confirm_signin_dist() {
 			if ($current_statut=="nouveau")
 				$current_statut = $auteur['prefs'];
 			if (isset($pre_signup_infos['statut'])
-			  AND intval($pre_signup_infos['statut'])<=intval($current_statut))
+			  AND
+				  (intval($pre_signup_infos['statut'])<=intval($current_statut)
+					  OR $current_statut == '5poubelle'
+				  ))
 				$infos['statut'] = $pre_signup_infos['statut'];
 
 			include_spip("formulaires/signup");

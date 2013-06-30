@@ -110,7 +110,7 @@ function magiclogin_informer_personaaccount($response){
 	// chercher l'auteur avec ces tokens
 	if (!$infos = sql_fetsel("*",
 		  "spip_auteurs",
-		  "email=".sql_quote($response['email']))){
+		  "statut!=".sql_quote('5poubelle')."AND email=".sql_quote($response['email']))){
 
 		$infos = array();
 		$infos['source'] = "persona";
