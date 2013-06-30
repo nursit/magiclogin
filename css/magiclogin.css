@@ -7,6 +7,6 @@
 .login-links .login-with .with:first-child img {padding-left: 0;}
 .login-links .login-with .with:last-child img {padding-right: 0;}
 
-.formulaire_login .login-links {float: right;}
+.formulaire_login .login-links {float: left;text-align: left}
 .login-links .login-messages {display: block;text-align: left}
 .login-links .login-messages.on {background: #333;color:#fff;padding:3px 5px;font-weight: normal;}
