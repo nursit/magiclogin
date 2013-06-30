@@ -20,6 +20,10 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @return null|string
  */
 function action_login_with_twitter_dist($is_callback = false, $redirect = null) {
+	if (isset($GLOBALS['visiteur_session']['statut'])
+	  AND $GLOBALS['visiteur_session']['statut'])
+		return;
+
 	if (!$is_callback){
 		// au premier appel
 		if (!isset($GLOBALS['visiteur_session']['statut'])

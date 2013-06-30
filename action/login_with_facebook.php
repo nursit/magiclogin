@@ -22,7 +22,11 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $redirect
  * @return null|string
  */
-function action_login_with_facebook_dist($is_callback = false, $redirect = null) {
+function action_login_with_facebook_dist() {
+	if (isset($GLOBALS['visiteur_session']['statut'])
+	  AND $GLOBALS['visiteur_session']['statut'])
+		return;
+
 	include_spip("inc/config");
 	include_spip("inc/filtres");
 	include_spip("lib/facebook-php-sdk/facebook");
