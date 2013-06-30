@@ -124,22 +124,24 @@ function magiclogin_informer_facebookaccount($user_id,&$facebook){
 
 	// chercher l'auteur avec ce user_id facebook
 	if (!$infos = sql_fetsel("*",
-		  "spip_auteurs",
-		  "statut!=".sql_quote('5poubelle')." AND facebook_id=".sql_quote($user_id,'','varchar'))){
+		"spip_auteurs",
+		"statut!=" . sql_quote('5poubelle') . " AND facebook_id=" . sql_quote($user_id, '', 'varchar'))
+	){
 
 		// si pas trouve, on pre - rempli avec les infos de FB
 		$infos = array();
 		$infos['source'] = "facebook";
 		$infos['facebook_id'] = $user_id;
 
-    try {
+		try {
 			$user_profile = $facebook->api('/me');
-	    $infos['nom'] = $user_profile['name'];
-	    $infos['lang'] = reset(explode("_",$user_profile['lang']));
-    }
-    catch (FacebookApiException $e) {
-			spip_log("Echec /me FacebookApiException $e","magiclogin"._LOG_ERREUR);
-    }
+			$infos['nom'] = $user_profile['name'];
+			$infos['lang'] = reset(explode("_", $user_profile['lang']));
+			# debug : a virer car donnees persos
+			spip_log("user_profile:" . var_export($user_profile, true), "magiclogin");
+		} catch (FacebookApiException $e) {
+			spip_log("Echec /me FacebookApiException $e", "magiclogin" . _LOG_ERREUR);
+		}
 	}
 
 	return $infos;
