@@ -1,7 +1,14 @@
 [(#SESSION{statut}|non|sinon_interdire_acces{#URL_SITE_SPIP})]
 [(#SET{nom,[ <small>(#SESSION{magiclogin_pre_signup/nom,''})</small>]})]
+[(#GET{nom}|non)
+<h1><:pass_vousinscrire:></h1>
+]
+[(#GET{nom}|oui)
 <h1><:magiclogin:titre_page_signup{nom=#GET{nom}}:></h1>
+]
 #SET{source,#SESSION{magiclogin_pre_signup/source}|ucfirst}
+[(#GET{source}|oui)
 <p><:magiclogin:info_page_signup{social_source=#GET{source}}:></p>
+]
 
 #FORMULAIRE_SIGNUP{6forum,#ENV{redirect}}
