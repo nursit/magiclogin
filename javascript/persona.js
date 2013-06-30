@@ -19,7 +19,7 @@ var magiclogin_persona = {
 	 * Afficher un message de service
 	 */
 	message: function(m,node) {
-		if (!this.display){
+		if (node || !this.display){
 			if (node){
 				var l = jQuery(node).closest(".login-links");
 				if (jQuery('.login-messages',l).length)
@@ -33,7 +33,11 @@ var magiclogin_persona = {
 					this.display = jQuery('.login-messages');
 			}
 		}
-		this.display.html(m);
+		if (m)
+			this.display.addClass("on").html(m);
+		else
+			this.display.removeClass("on");
+
 	},
 
 
