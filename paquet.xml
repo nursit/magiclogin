@@ -1,7 +1,7 @@
 <paquet
 	prefix="magiclogin"
 	categorie="auteur"
-	version="0.4.3"
+	version="0.4.4"
 	etat="test"
 	compatibilite="[3.0.0;3.0.*]"
 	logo="prive/themes/spip/images/magiclogin-32.png"
@@ -14,9 +14,9 @@
 	<auteur lien='http://www.yterium.com/'>Cédric</auteur>
 
 	<licence>GNU/GPL</licence>
-	<pipeline nom="insert_head" inclure="magiclogin_fonctions.php" />
-	<pipeline nom="insert_head_css" inclure="magiclogin_fonctions.php" />
-	<pipeline nom="formulaire_fond" inclure="magiclogin_fonctions.php" />
+	<pipeline nom="insert_head" />
+	<pipeline nom="insert_head_css" />
+	<pipeline nom="formulaire_fond" />
 
 
 	<necessite nom="twitter" compatibilite="[1.1.1;]" />
