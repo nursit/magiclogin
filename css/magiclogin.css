@@ -1,3 +1,12 @@
-.formulaire_login .login-links {display: block;float: left;text-align: left}
+.login-links,.logout-links {text-align: center}
+.login-links a {display: inline-block;}
+.login-links .sep {display: none;}
+.login-links .login-label {}
+.login-links .login-with {display:block;}
+.login-links .login-with img {vertical-align: bottom;padding: 0px 5px;}
+.login-links .login-with .with:first-child img {padding-left: 0;}
+.login-links .login-with .with:last-child img {padding-right: 0;}
+
+.formulaire_login .login-links {float: right;}
 .login-links .login-messages {display: block;text-align: left}
 .login-links .login-messages.on {background: #333;color:#fff;padding:3px 5px;font-weight: normal;}

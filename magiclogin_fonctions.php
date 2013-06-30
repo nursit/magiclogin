@@ -46,7 +46,7 @@ function balise_LOGIN_LINKS_dist($p) {
 	else
 		$_target_url = "\''.addslashes($_target_url).'\'";
 
-	$p->code = "'<' . '"."?php echo magiclogin_login_links($_target_url); ?'.'>'";
+	$p->code = "'<!--magiclogin--><' . '"."?php echo magiclogin_login_links($_target_url); ?'.'>'";
 
 	$p->interdire_scripts = false;
 	return $p;
@@ -81,7 +81,7 @@ function balise_LOGOUT_LINK_dist($p) {
 	else
 		$_target_url = "\''.addslashes($_target_url).'\'";
 
-	$p->code = "'<' . '"."?php echo magiclogin_logout_link($_target_url); ?'.'>'";
+	$p->code = "'<!--magiclogin--><' . '"."?php echo magiclogin_logout_link($_target_url); ?'.'>'";
 
 	$p->interdire_scripts = false;
 	return $p;
@@ -125,8 +125,7 @@ function magiclogin_formulaire_fond($flux){
 		$links = magiclogin_login_links(_request('url'));
 		// trouver le dernier fieldset, puis le premier input apres : c'est le bouton
 		$pf = strripos($flux['data'],"</fieldset>");
-		if ($pi = stripos($flux['data'],"<input",$pf)
-		  OR $pi = stripos($flux['data'],"<button",$pf)){
+		if ($pi = stripos($flux['data'],"<p",$pf)){
 			$flux['data'] = substr_replace($flux['data'],$links,$pi,0);
 		}
 	}
