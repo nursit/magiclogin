@@ -18,6 +18,7 @@ Vous allez recevoir un email avec un lien de confirmation pour finir de vous con
 	'bouton_me_connecter' => 'Me connecter',
 	'info_finir_inscription_suivre_lien' => 'Pour finir votre identification, suivez ce lien : @url_confirm@',
 	'confirmsignup_titre_email' => 'Terminer votre identification',
+	'erreur_signup_inscription_desactivee' => '<b>Erreur :</b> l\'inscription n\'est pas permise sur ce site. Contactez un administrateur si vous souhaitez participer à la vie du site.'
 );
 
 ?>

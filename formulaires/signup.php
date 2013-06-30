@@ -17,7 +17,7 @@ function formulaires_signup_charger_dist($statut="6forum", $redirect=""){
 	// pas de formulaire si le mode est interdit
 	include_spip('inc/autoriser');
 	if (!autoriser('inscrireauteur', $statut))
-		return false;
+		return array('message_erreur'=>_T('signup:erreur_signup_inscription_desactivee'),'editable'=>false);
 
 	$valeurs = array(
 		'nom' => '',
