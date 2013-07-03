@@ -75,6 +75,7 @@ function formulaires_editer_profil_traiter_dist($id_auteur=null){
 	$ajouter_image = charger_fonction('spip_image_ajouter','action');
 	$chercher_logo = charger_fonction('chercher_logo','inc');
 	$sources = formulaire_editer_logo_get_sources();
+
 	foreach($sources as $etat=>$file) {
 		if ($file and $file['error']==0) {
 			$logo = $chercher_logo($id_auteur, "id_auteur", $etat);

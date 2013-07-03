@@ -1,7 +1,7 @@
 <div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id,nouveau}">
 	[<div class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</div>]
 	[<div class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</div>]
-	<BOUCLE_aut(AUTEURS){id_auteur=#ENV{_id_auteur}}{si #ENV{editable}}>#SET{avatar,#LOGO_AUTEUR{80,80}}</BOUCLE_aut>
+	<BOUCLE_aut(AUTEURS){id_auteur=#ENV{_id_auteur}}{tout}{si #ENV{editable}}>#SET{avatar,#LOGO_AUTEUR{80,80}|extraire_attribut{src}|timestamp|balise_img{'',spip_logos}}</BOUCLE_aut>
 	[(#ENV{editable})
 	<form method='post' action='#ENV{action}' enctype='multipart/form-data'><div>
 		[(#REM) declarer les hidden qui declencheront le service du formulaire
