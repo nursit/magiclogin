@@ -11,7 +11,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_logo_on' => 'Avatar',
 	'erreur_nom_obligatoire' => 'Vous devez fournir un pseudo !',
 	'erreur_email_obligatoire' => 'Vous devez fournir un email !',
-	'message_ok_profil_modifie' => 'Votre profil a été mis à jour.'
+	'message_ok_profil_modifie' => 'Votre profil a été mis à jour.',
+	'erreur_email_deja_utilise' => 'Cet email est déjà utilisé par un autre utilisateur !',
 
 );
 

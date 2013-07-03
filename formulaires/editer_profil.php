@@ -51,6 +51,12 @@ function formulaires_editer_profil_verifier_dist($id_auteur=null){
 			$erreurs['email'] = _T('info_email_invalide');
 	}
 
+	// verifier l'unicité de l'email
+	if (!isset($erreurs['email'])
+	  AND sql_countsel("spip_auteurs","id_auteur!=".intval($id_auteur)." AND email=".sql_quote(_request('email')))){
+		$erreurs['email'] = _T('editer_profil:erreur_email_deja_utilise');
+	}
+
 	return $erreurs;
 }
 
