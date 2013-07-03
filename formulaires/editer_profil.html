@@ -1,0 +1,44 @@
+<div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id,nouveau}">
+	[<div class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</div>]
+	[<div class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</div>]
+	<BOUCLE_aut(AUTEURS){id_auteur=#ENV{_id_auteur}}{si #ENV{editable}}>#SET{avatar,#LOGO_AUTEUR{80,80}}</BOUCLE_aut>
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}' enctype='multipart/form-data'><div>
+		[(#REM) declarer les hidden qui declencheront le service du formulaire
+		parametre : url d'action ]
+		#ACTION_FORMULAIRE{#ENV{action}}
+		#SET{fl,editer_profil}
+		<ul>
+			#SET{name,nom}#SET{obli,'obligatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
+			</li>
+			#SET{name,email}#SET{obli,'obligatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]<input type="text" class="text" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
+			</li>
+			#SET{name,bio}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]<textarea name="#GET{name}" class="textarea">
+#ENV*{#GET{name},#GET{defaut}}</textarea>
+			</li>
+			#SET{name,logo_on}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]#GET{avatar}<input type="file" class="text file" name="#GET{name}" value="#ENV*{#GET{name}}" id="#GET{name}"/>
+			</li>
+		</ul>
+	  [(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+	  <!--extra-->
+	  <p class='boutons'><span class='image_loading'>&nbsp;</span>
+			<input type='submit' class='submit' value='<:bouton_enregistrer|attribut_html:>' /></p>
+	</div></form>
+	]
+</div>
