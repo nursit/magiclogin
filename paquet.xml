@@ -19,5 +19,5 @@
 	<pipeline nom="formulaire_fond" />
 
 
-	<necessite nom="twitter" compatibilite="[1.1.1;]" />
+	<utilise nom="twitter" compatibilite="[1.1.1;]" />
 </paquet>

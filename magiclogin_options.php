@@ -12,6 +12,32 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 /**
+ * verifier que FB est configure
+ * @return string
+ */
+function magiclogin_facebook_ok(){
+	include_spip("inc/config");
+	if (lire_config('magiclogin/facebook_consumer_key')
+	  AND lire_config('magiclogin/facebook_consumer_secret'))
+		return ' ';
+	return '';
+}
+
+/**
+ * Verifier que Twitter est configure
+ * @return string
+ */
+function magiclogin_twitter_ok(){
+	if (!defined("_DIR_PLUGIN_TWITTER"))
+		return '';
+	include_spip("inc/config");
+	if (lire_config('microblog/twitter_consumer_key')
+	  AND lire_config('microblog/twitter_consumer_secret'))
+		return ' ';
+	return '';
+}
+
+/**
  * Inserer la css de Persona dans le head
  * @param string $flux
  * @return string

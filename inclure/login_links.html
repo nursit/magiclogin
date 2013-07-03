@@ -1,14 +1,14 @@
 <p class="login-links"><span class="login-label"><:lien_connecter:> via</span>
 	<span class="login-with">
-		<span
+		[<span (#REM|magiclogin_facebook_ok)
 			class="with with-fb"><a
-			href="[(#URL_LOGIN{facebook,#ENV{url}})]" class="fb" rel="nofollow">[(#CHEMIN{images/login-facebook-24.png}|balise_img{Facebook})]</a><span
-			class="sep"> | </span></span><span
+			href="[(#URL_LOGIN{facebook,#ENV{url}})]" class="fb" rel="nofollow" title="Facebook">[(#CHEMIN{images/login-facebook-24.png}|balise_img{Facebook})]</a><span
+			class="sep"> | </span></span>][<span (#REM|magiclogin_twitter_ok)
 			class="with with-twitter"><a
-			href="[(#URL_LOGIN{twitter,#ENV{url}})]" class="twitter" rel="nofollow">[(#CHEMIN{images/login-twitter-24.png}|balise_img{Twitter})]</a><span
-			class="sep"> | </span></span><span
+			href="[(#URL_LOGIN{twitter,#ENV{url}})]" class="twitter" rel="nofollow" title="Twitter">[(#CHEMIN{images/login-twitter-24.png}|balise_img{Twitter})]</a><span
+			class="sep"> | </span></span>]<span
 			class="with with-persona"><a
-			href="#" onclick="magiclogin_persona.start('[(#URL_LOGIN{persona,#ENV{url}})]',this);return false;"
+			href="#" onclick="magiclogin_persona.start('[(#URL_LOGIN{persona,#ENV{url}})]',this);return false;"  title="Email"
 			class="persona" rel="nofollow">[(#CHEMIN{images/login-persona-24.png}|balise_img{Email})]</a></span></span>
 		<script type="text/javascript">
 		magiclogin_persona.messages.message_js_appel_incorrect='<:persona:message_js_appel_incorrect|texte_script:>';
