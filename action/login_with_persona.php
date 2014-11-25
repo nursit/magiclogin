@@ -72,7 +72,7 @@ function action_login_with_persona_dist() {
 					include_spip("inc/session");
 					session_set("magiclogin_pre_signup",$auteur);
 					// et rediriger vers la page de signup
-					$res['redirect'] = parametre_url(generer_url_public("signup","",true),"redirect",$redirect);
+					$res['redirect'] = parametre_url(generer_url_public("signup","",true),"redirect",$redirect,"&");
 				}
 				else {
 					// loger l'auteur

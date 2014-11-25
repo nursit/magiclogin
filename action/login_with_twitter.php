@@ -50,7 +50,7 @@ function action_login_with_twitter_dist($is_callback = false, $redirect = null) 
 			include_spip("inc/session");
 			session_set("magiclogin_pre_signup",$auteur);
 			// et rediriger vers la page de signup
-			return parametre_url(generer_url_public("signup","",true),"redirect",$redirect);
+			return parametre_url(generer_url_public("signup","",true),"redirect",$redirect,"&");
 		}
 		else {
 			// loger l'auteur
