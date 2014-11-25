@@ -15,7 +15,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * Cette action permet de confirmer une connexion
  * @return void
  */
-function action_confirm_signin_dist() {
+function action_magiclogin_confirm_signin_dist() {
 	$jeton = _request('jeton');
 	$email = _request('email');
 

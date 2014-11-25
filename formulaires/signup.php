@@ -133,9 +133,9 @@ function magiclogin_signup_confirmer_email($statut,$email,$nom,$desc,$pre_signup
 	$contexte['nom'] = $nom;
 	$contexte['mode'] = $statut;
 	$contexte['redirect'] = $redirect;
-	$contexte['url_confirm'] = generer_url_action('confirm_signin','',true,true);
-	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'email',$email);
-	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'jeton',$jeton);
+	$contexte['url_confirm'] = url_absolue("magiclogin.api/confirm");
+	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'email',$email,"&");
+	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'],'jeton',$jeton,"&");
 
 	$message = recuperer_fond('modeles/mail_confirmsignup',$contexte);
 	include_spip("inc/notifications");

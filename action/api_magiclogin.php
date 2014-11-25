@@ -18,8 +18,14 @@ function action_api_magiclogin_dist() {
 	$arg = explode("/",$arg);
 
 	$with = array_shift($arg);
-	$magiclogin_with = charger_fonction("magiclogin_with_$with","action");
-	$magiclogin_with($arg);
+	if ($with=="confirm"){
+		$confirm = charger_fonction("magiclogin_confirm_signin","action");
+		$confirm();
+	}
+	else {
+		$magiclogin_with = charger_fonction("magiclogin_with_$with","action");
+		$magiclogin_with($arg);
+	}
 }
 
 
