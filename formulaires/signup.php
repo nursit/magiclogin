@@ -15,8 +15,10 @@ function formulaires_signup_charger_dist($statut="6forum", $redirect=""){
 
 	// Verifier le droit de s'inscrire avec ce statut
 	// pas de formulaire si le mode est interdit
+	// sauf si on est en fin de magiclogin_pre_signup car c'est peut etre le premier login d'un inscrit
 	include_spip('inc/autoriser');
-	if (!autoriser('inscrireauteur', $statut))
+	if (!autoriser('inscrireauteur', $statut)
+	  AND !isset($GLOBALS['visiteur_session']['magiclogin_pre_signup']))
 		return array('message_erreur'=>_T('signup:erreur_signup_inscription_desactivee'),'editable'=>false);
 
 	$valeurs = array(
@@ -64,19 +66,23 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 
 	include_spip('inc/filtres');
 	include_spip('inc/autoriser');
-	if (!autoriser('inscrireauteur', $statut))
-		$res['message_erreur'] = "Not allowed";
-	else {
-		// c'est une fin de signup par une source sociale
-		if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup'])){
-			if ($row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email))){
-				// c'est un email deja existant en base
-				// on lance une inscription sur cet email
 
-				magiclogin_signup_confirmer_email($statut,$email,$nom,$row,$GLOBALS['visiteur_session']['magiclogin_pre_signup'],$redirect);
-				$res = array('message_ok' => _T('signup:info_confirmer_email_deja_utilise',array('email'=>$email,"social_source"=>ucfirst($GLOBALS['visiteur_session']['magiclogin_pre_signup']['source']))));
-			}
-			else {
+	// est-ce le 1er login social d'un auteur deja existant ?
+	// dans ce cas on lance une confirmation par email pour finir le processus
+	if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup'])
+	  AND $row = sql_fetsel("*","spip_auteurs","email=".sql_quote($email))){
+
+		magiclogin_signup_confirmer_email($statut,$email,$nom,$row,$GLOBALS['visiteur_session']['magiclogin_pre_signup'],$redirect);
+		$res = array('message_ok' => _T('signup:info_confirmer_email_deja_utilise',array('email'=>$email,"social_source"=>ucfirst($GLOBALS['visiteur_session']['magiclogin_pre_signup']['source']))));
+	}
+	else {
+		// dans tous les autres cas il faut que l'inscription soit autorisee sur le site
+		if (!autoriser('inscrireauteur', $statut))
+			$res['message_erreur'] = _T('signup:erreur_signup_inscription_desactivee');
+		else {
+			// c'est une fin de signup par une source sociale,
+			// forcement un nouveau compte puisque le cas du compte existant a ete verifie au-dessus
+			if (isset($GLOBALS['visiteur_session']['magiclogin_pre_signup'])){
 				$source = $GLOBALS['visiteur_session']['magiclogin_pre_signup']['source'];
 				$infos = array(
 				  'email'=>$email,
@@ -88,17 +94,17 @@ function formulaires_signup_traiter_dist($statut="6forum", $redirect=""){
 				if (!isset($res['message_erreur']))
 					$res['redirect'] = ($redirect?$redirect:self());
 			}
-		}
-		// c'est un signup direct
-		else {
-			$inscrire_auteur = charger_fonction("inscrire_auteur","action");
-			$desc = $inscrire_auteur($statut, $email, $nom, array("login"=>$email));
-			// erreur ?
-			if (is_string($desc))
-				$res['message_erreur']= $desc;
-			// OK
-			else
-				$res = array('message_ok' => _T('form_forum_identifiant_mail'), 'id_auteur' => $desc['id_auteur']);
+			// c'est un signup direct
+			else {
+				$inscrire_auteur = charger_fonction("inscrire_auteur","action");
+				$desc = $inscrire_auteur($statut, $email, $nom, array("login"=>$email));
+				// erreur ?
+				if (is_string($desc))
+					$res['message_erreur']= $desc;
+				// OK
+				else
+					$res = array('message_ok' => _T('form_forum_identifiant_mail'), 'id_auteur' => $desc['id_auteur']);
+			}
 		}
 	}
 
