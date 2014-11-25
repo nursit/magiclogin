@@ -75,6 +75,9 @@ class Google_IO_Curl extends Google_IO_Abstract
 
     if (!isset($this->options[CURLOPT_CAINFO])) {
       curl_setopt($curl, CURLOPT_CAINFO, dirname(__FILE__) . '/cacerts.pem');
+	    if (defined('_MAGICLOGIN_IGNORE_SSL_VERIFYPEER')){
+		    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	    }
     }
 
     $this->client->getLogger()->debug(
