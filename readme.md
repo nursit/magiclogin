@@ -1,6 +1,6 @@
 # MagicLogin
 
-Ce plugin permet le login rapide via un réseau social (Facebook, Twitter, Google, Persona) en guise de SSO.
+Ce plugin pour SPIP permet le login rapide via un réseau social (Facebook, Twitter, Google, Persona) en guise de SSO.
 Pour l'utiliser, il faut une page `spip.php?page=signup` qui contient `<INCLURE{fond=content/signup,env} />`.
 Si l'inscription est interdite sur le site, le formulaire ne permettra pas la création de compte, mais il permet d'associer un compte social avec un auteur existant lors de la première utilisation du compte social pour s'identifier.
 
