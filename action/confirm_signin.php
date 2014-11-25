@@ -54,6 +54,9 @@ function action_confirm_signin_dist() {
 
 			include_spip("formulaires/signup");
 			$res = magiclogin_finish_signup($source, $infos, $pre_signup_infos);
+			@unlink($file);
+			// on met a jour le compte
+			$auteur = sql_fetsel('*','spip_auteurs','id_auteur='.intval($auteur['id_auteur']));
 		}
 
 		// on le loge => ca va confirmer son statut (si besoin) et c'est plus sympa
