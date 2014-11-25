@@ -20,6 +20,12 @@ Nous avons juste besoin de quelques informations pour vous identifier.',
 	'titre_page_configurer_magiclogin' => 'Configuration de MagicLogin',
 	'titre_page_signup' => 'Bonjour@nom@',
 
+	'label_taille_icones' => 'Taille des icones pour les liens de login',
+	'label_taille_icones_16' => '16px',
+	'label_taille_icones_24' => '24px',
+	'label_taille_icones_32' => '32px',
+	'label_taille_icones_48' => '48px',
+
 	'explication_facebook_api_oauth' => 'Créez une application Facebook <a href="https://developers.facebook.com/apps">dans l\'espace développeurs (https://developers.facebook.com/apps)</a>.
 Entrez ci-dessous les clés d\'identification et enregistrez (<a href="http://www.designaesthetic.com/2012/03/02/create-facebook-login-oauth-php-sdk/">Plus d\'aide</a>).',
 	'label_facebook_consumer_key' => 'Cl&eacute; cliente (<em>App ID</em>)',
