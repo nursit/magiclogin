@@ -170,8 +170,6 @@ function action_magiclogin_with_google_dist() {
  * @return array
  */
 function magiclogin_informer_googleaccount($userData,&$google){
-	var_dump($userData);
-
 	// chercher l'auteur avec ce user_id google
 	if (!$infos = sql_fetsel("*",
 		"spip_auteurs",
@@ -182,8 +180,10 @@ function magiclogin_informer_googleaccount($userData,&$google){
 		$infos['source'] = "google";
 		$infos['google_id'] = $userData->id;
 		$infos['nom'] = $userData->name;
-		// si on renseigne l'email ici, il sera pas possible d'avoir le compte google associe a un email different dans SPIP
-		//$infos['email'] = $userData->email;
+
+		// email suggere pre-rempli mais modifiable car google impose possiblement son email @gmail.com qu'on ne veut pas forcement utiliser
+		// (on a des alias pour un meme compte mail)
+		$infos['suggested_email'] = $userData->email;
 
 		// on met l'email google en login ca fera double login possible
 		$infos['login'] = $userData->email;
