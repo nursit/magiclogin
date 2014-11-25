@@ -19,7 +19,7 @@ define('_PERSONA_VERIFY', "https://verifier.login.persona.org/verify");
  *   Lancer l'authorisation puis recuperer les tokens
  * @return null|string
  */
-function action_login_with_persona_dist() {
+function action_magiclogin_with_persona_dist() {
 
 	include_spip('inc/filtres_mini');
 	include_spip('inc/distant');

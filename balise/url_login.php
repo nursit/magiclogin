@@ -37,8 +37,8 @@ function balise_URL_LOGIN_dyn($with, $cible) {
 			$cible = self('&');
 	}
 
-	$url = parametre_url(generer_url_action('login'),"with",$with,"&");
-	$url = parametre_url($url,"redirect",$cible);
+	$url = url_absolue("magiclogin.api/$with");
+	$url = parametre_url($url,"redirect",$cible,"&");
 	return $url;
 }
 

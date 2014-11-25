@@ -12,11 +12,14 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 
-function action_login_dist() {
+function action_api_magiclogin_dist() {
 
-	$with = _request('with');
-	$login_with = charger_fonction("login_with_$with","action");
-	$login_with();
+	$arg = _request('arg');
+	$arg = explode("/",$arg);
+
+	$with = array_shift($arg);
+	$magiclogin_with = charger_fonction("magiclogin_with_$with","action");
+	$magiclogin_with($arg);
 }
 
 

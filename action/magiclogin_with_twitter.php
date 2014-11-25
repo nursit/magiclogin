@@ -19,7 +19,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $redirect
  * @return null|string
  */
-function action_login_with_twitter_dist($is_callback = false, $redirect = null) {
+function action_magiclogin_with_twitter_dist($is_callback = false, $redirect = null) {
 	if (isset($GLOBALS['visiteur_session']['statut'])
 	  AND $GLOBALS['visiteur_session']['statut'])
 		return;
@@ -31,7 +31,7 @@ function action_login_with_twitter_dist($is_callback = false, $redirect = null) 
 
 			// lancer la demande d'autorisation en indiquant le nom de l'action qui sera rappelee au retour
 			include_spip("action/twitter_oauth_authorize");
-			twitter_oauth_authorize("login_with_twitter",_request('redirect'));
+			twitter_oauth_authorize("magiclogin_with_twitter",_request('redirect'));
 		}
 	}
 	else {

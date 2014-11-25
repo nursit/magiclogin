@@ -22,7 +22,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param string $redirect
  * @return null|string
  */
-function action_login_with_facebook_dist() {
+function action_magiclogin_with_facebook_dist($args) {
 	if (isset($GLOBALS['visiteur_session']['statut'])
 	  AND $GLOBALS['visiteur_session']['statut'])
 		return;
@@ -64,13 +64,13 @@ function action_login_with_facebook_dist() {
 
 		// au premier appel
 		// si pas deja loge, et si pas en retour de login, lancer la demande
-		if (!$user_id AND !_request('code') AND !_request('callback')){
+		if (!$user_id AND !_request('code') AND !in_array("callback",$args)){
 
 			/**
 			 * L'URL de callback qui sera utilisée suite à la validation chez FB
 			 * Elle vérifiera le retour et finira la configuration
 			 */
-			$oauth_callback = url_absolue(generer_url_action('login_with_facebook','callback=1',true));
+			$oauth_callback = url_absolue("magiclogin.api/facebook/callback");
 
 			$loginUrl = $facebook->getLoginUrl(array('redirect_uri'=>$oauth_callback,'response_type'=>'code'/*,'scope'=>'email'*/));
 			$GLOBALS['redirect'] = $loginUrl;

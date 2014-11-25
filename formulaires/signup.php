@@ -157,12 +157,14 @@ function magiclogin_finish_signup($source, $infos, $pre_signup_infos){
 	);
 
 	if ($source
-	  AND include_spip("action/login_with_$source")
+	  AND include_spip("action/magiclogin_with_$source")
 	  AND $signup_with = charger_fonction("signup_with_$source","magiclogin",true)){
 		$desc = $signup_with($desc,$pre_signup_infos);
 	}
-	else
+	else {
+		spip_log("Source signup inconnue '$source'","magiclogin"._LOG_ERREUR);
 		return array('message_erreur' => "Unknown signup source");
+	}
 
 	if (isset($pre_signup_infos['bio']) AND $pre_signup_infos['bio'])
 		$desc['bio'] = $pre_signup_infos['bio'];
@@ -170,6 +172,7 @@ function magiclogin_finish_signup($source, $infos, $pre_signup_infos){
 	if (isset($infos['id_auteur'])){
 		if (isset($infos['statut']))
 			$desc['statut'] = $infos['statut'];
+		$desc['id_auteur'] = $infos['id_auteur'];
 
 		include_spip('inc/autoriser');
 		include_spip("action/editer_auteur");
@@ -205,6 +208,7 @@ function magiclogin_finish_signup($source, $infos, $pre_signup_infos){
 
 	// erreur ?
 	if (is_string($desc)){
+		spip_log("magiclogin_finish_signup : $desc","magiclogin"._LOG_ERREUR);
 		return array('message_erreur'=> $desc);
 	}
 	// OK
