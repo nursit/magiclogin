@@ -11,6 +11,9 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+// pour desactiver la verification du certificat de securite dans l'auth via google
+// define('_MAGICLOGIN_IGNORE_SSL_VERIFYPEER',true);
+
 function magiclogin_ok(){
 	if (magiclogin_facebook_ok() OR magiclogin_google_ok() OR magiclogin_twitter_ok() OR magiclogin_persona_ok())
 		return ' ';
