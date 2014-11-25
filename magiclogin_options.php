@@ -17,7 +17,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  */
 function magiclogin_facebook_ok(){
 	include_spip("inc/config");
-	if (lire_config('magiclogin/facebook_consumer_key')
+	if (lire_config('magiclogin/activer_facebook','oui')=='oui'
+		AND lire_config('magiclogin/facebook_consumer_key')
 	  AND lire_config('magiclogin/facebook_consumer_secret'))
 		return ' ';
 	return '';
@@ -31,8 +32,16 @@ function magiclogin_twitter_ok(){
 	if (!defined("_DIR_PLUGIN_TWITTER"))
 		return '';
 	include_spip("inc/config");
-	if (lire_config('microblog/twitter_consumer_key')
+	if (lire_config('magiclogin/activer_twitter','oui')=='oui'
+		AND lire_config('microblog/twitter_consumer_key')
 	  AND lire_config('microblog/twitter_consumer_secret'))
+		return ' ';
+	return '';
+}
+
+function magiclogin_persona_ok(){
+	include_spip("inc/config");
+	if (lire_config('magiclogin/activer_persona','oui')=='oui')
 		return ' ';
 	return '';
 }
@@ -148,11 +157,13 @@ function magiclogin_formulaire_fond($flux){
 	// determiner le nom du formulaire
 	$form = $flux['args']['form'];
 	if ($form=="login") {
-		$links = magiclogin_login_links(_request('url'));
-		// trouver le dernier fieldset, puis le premier input apres : c'est le bouton
-		$pf = strripos($flux['data'],"</fieldset>");
-		if ($pi = stripos($flux['data'],"<p",$pf)){
-			$flux['data'] = substr_replace($flux['data'],$links,$pi,0);
+		if (magiclogin_facebook_ok() OR magiclogin_twitter_ok() OR magiclogin_persona_ok()){
+			$links = magiclogin_login_links(_request('url'));
+			// trouver le dernier fieldset, puis le premier input apres : c'est le bouton
+			$pf = strripos($flux['data'],"</fieldset>");
+			if ($pi = stripos($flux['data'],"<p",$pf)){
+				$flux['data'] = substr_replace($flux['data'],$links,$pi,0);
+			}
 		}
 	}
 

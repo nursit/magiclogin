@@ -26,6 +26,11 @@ Entrez ci-dessous les clés d\'identification et enregistrez (<a href="http://ww
 	'label_facebook_consumer_secret' => 'Cl&eacute; secr&#232;te (<em>App Secret</em>)',
 	'legend_api_facebook' => 'Application Facebook',
 
+	'label_activer_facebook_oui' => 'Activer le login rapide via Facebook',
+	'label_activer_twitter_oui' => 'Activer le login rapide via Twitter',
+	'label_activer_persona_oui' => 'Activer le login rapide via Persona',
+	'explication_activer_twitter' => 'Installez et configurez le plugin <a href="http://plugins.spip.net/twitter">Twitter</a> pour utiliser le login rapide via Twitter.'
+
 );
 
 ?>

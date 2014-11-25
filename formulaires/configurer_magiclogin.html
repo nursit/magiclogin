@@ -9,22 +9,69 @@
 	<div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 
-		<fieldset class="api">
-			<legend><:magiclogin:legend_api_facebook:></legend>
-			<p class="explication"><:magiclogin:explication_facebook_api_oauth:></p>
-			<ul class="compte">
-				<li class="editer_facebook_consumer_key facebook_conf[(#GET{api_erreur})erreur]">
-					<label for="facebook_consumer_key"><:magiclogin:label_facebook_consumer_key:></label>
-					<input type="text" name="facebook_consumer_key" value="[(#ENV{facebook_consumer_key})]" id="facebook_consumer_key" class="text" />
-				</li>
-				<li class="editer_facebook_consumer_secret facebook_conf[(#GET{api_erreur})erreur]">
-					<label for="facebook_consumer_secret"><:magiclogin:label_facebook_consumer_secret:></label>
-					<input type="text" name="facebook_consumer_secret" value="[(#ENV{facebook_consumer_secret}|=={#CONFIG{magiclogin/facebook_consumer_secret}}|?{'',#ENV{facebook_consumer_secret}})]" id="facebook_consumer_secret" class="text" />
-					[<em><tt>(#CONFIG{magiclogin/facebook_consumer_secret}|magiclogin_masquer_secret)</tt></em>]
-				</li>
-			</ul>
-		</fieldset>
+		#SET{fl,magiclogin}
+		<ul>
+			#SET{name,activer_facebook}#SET{obli,''}#SET{defaut,'oui'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]#SET{val,'non'}
+				<input type="hidden" name="#GET{name}" value="#GET{val}" />
+				#SET{val,oui}
+				<div class="choix">
+					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+					<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+				</div>
+			</li>
+			<li class="fieldset suite">
+				<fieldset class="api">
+					<legend><:magiclogin:legend_api_facebook:></legend>
+					<p class="explication"><:magiclogin:explication_facebook_api_oauth:></p>
+					<ul class="compte">
+						<li class="editer_facebook_consumer_key facebook_conf[(#GET{api_erreur})erreur]">
+							<label for="facebook_consumer_key"><:magiclogin:label_facebook_consumer_key:></label>
+							<input type="text" name="facebook_consumer_key" value="[(#ENV{facebook_consumer_key})]" id="facebook_consumer_key" class="text" />
+						</li>
+						<li class="editer_facebook_consumer_secret facebook_conf[(#GET{api_erreur})erreur]">
+							<label for="facebook_consumer_secret"><:magiclogin:label_facebook_consumer_secret:></label>
+							<input type="text" name="facebook_consumer_secret" value="[(#ENV{facebook_consumer_secret}|=={#CONFIG{magiclogin/facebook_consumer_secret}}|?{'',#ENV{facebook_consumer_secret}})]" id="facebook_consumer_secret" class="text" />
+							[<em><tt>(#CONFIG{magiclogin/facebook_consumer_secret}|magiclogin_masquer_secret)</tt></em>]
+						</li>
+					</ul>
+				</fieldset>
+			</li>
+			#SET{disabled,#PLUGIN{twitter}|non}
+			#SET{name,activer_twitter}#SET{obli,''}#SET{defaut,#GET{disabled}|?{'','oui'}}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]#SET{val,'non'}
+				<input type="hidden" name="#GET{name}" value="#GET{val}" />
+				#SET{val,oui}
+				<div class="choix">
+					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"][(#GET{disabled}|oui)disabled="disabled"] />
+					<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+				</div>
+				[(#GET{disabled}|oui)
+				<p class="explication"><:magiclogin:explication_activer_twitter:></p>
+				]
+			</li>
+			#SET{name,activer_persona}#SET{obli,''}#SET{defaut,'oui'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer pleine_largeur editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]#SET{val,'non'}
+				<input type="hidden" name="#GET{name}" value="#GET{val}" />
+				#SET{val,oui}
+				<div class="choix">
+					<input type="checkbox" name="#GET{name}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)checked="checked"] />
+					<label for="#GET{name}_#GET{val}">[(#GET{fl}|concat{':label_',#GET{name},'_',#GET{val}}|_T)]</label>
+				</div>
+			</li>
+
+		</ul>
 		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
 	</div>
 	</form>
 </div>
+<style>
+.suite {margin-left: 40px;}
+input.checkbox:checked + label {font-weight: bold;}
+</style>
