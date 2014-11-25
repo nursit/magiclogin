@@ -11,6 +11,12 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
+function magiclogin_ok(){
+	if (magiclogin_facebook_ok() OR magiclogin_google_ok() OR magiclogin_twitter_ok() OR magiclogin_persona_ok())
+		return ' ';
+	return '';
+}
+
 /**
  * verifier que FB est configure
  * @return string
@@ -20,6 +26,20 @@ function magiclogin_facebook_ok(){
 	if (lire_config('magiclogin/activer_facebook','oui')=='oui'
 		AND lire_config('magiclogin/facebook_consumer_key')
 	  AND lire_config('magiclogin/facebook_consumer_secret'))
+		return ' ';
+	return '';
+}
+
+/**
+ * verifier que Google est configure
+ * @return string
+ */
+function magiclogin_google_ok(){
+	include_spip("inc/config");
+	if (lire_config('magiclogin/activer_google','oui')=='oui'
+		AND lire_config('magiclogin/google_client_id')
+		AND lire_config('magiclogin/google_client_secret')
+		AND lire_config('magiclogin/google_api_key'))
 		return ' ';
 	return '';
 }
@@ -157,7 +177,7 @@ function magiclogin_formulaire_fond($flux){
 	// determiner le nom du formulaire
 	$form = $flux['args']['form'];
 	if ($form=="login") {
-		if (magiclogin_facebook_ok() OR magiclogin_twitter_ok() OR magiclogin_persona_ok()){
+		if (magiclogin_ok()){
 			$links = magiclogin_login_links(_request('url'));
 			// trouver le dernier fieldset, puis le premier input apres : c'est le bouton
 			$pf = strripos($flux['data'],"</fieldset>");

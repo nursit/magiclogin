@@ -1,12 +1,12 @@
 <paquet
 	prefix="magiclogin"
 	categorie="auteur"
-	version="0.5.0"
+	version="0.6.0"
 	etat="test"
 	compatibilite="[3.0.0;3.0.*]"
 	logo="prive/themes/spip/images/magiclogin-32.png"
 	documentation=""
-	schema="0.2.0"
+	schema="0.2.1"
 >
 
 	<nom>MagicLogin</nom>

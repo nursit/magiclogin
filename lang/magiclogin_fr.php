@@ -26,8 +26,16 @@ Entrez ci-dessous les clés d\'identification et enregistrez (<a href="http://ww
 	'label_facebook_consumer_secret' => 'Cl&eacute; secr&#232;te (<em>App Secret</em>)',
 	'legend_api_facebook' => 'Application Facebook',
 
+	'explication_google_api_oauth' => 'Créez une application Google <a href="https://console.developers.google.com/">dans la console développeurs (https://console.developers.google.com/)</a> avec l\'url de redirection <tt>@url_redirect@</tt>.
+Entrez ci-dessous les clés d\'identification et enregistrez (<a href="http://phppot.com/php/php-google-oauth-login/">Plus d\'aide</a>).',
+	'label_google_client_id' => 'Identifiant Client',
+	'label_google_client_secret' => 'Code secret Client',
+	'label_google_api_key' => 'Clé de l\'API',
+	'legend_api_google' => 'Application Google',
+
 	'label_activer_facebook_oui' => 'Activer le login rapide via Facebook',
 	'label_activer_twitter_oui' => 'Activer le login rapide via Twitter',
+	'label_activer_google_oui' => 'Activer le login rapide via Google',
 	'label_activer_persona_oui' => 'Activer le login rapide via Persona',
 	'explication_activer_twitter' => 'Installez et configurez le plugin <a href="http://plugins.spip.net/twitter">Twitter</a> pour utiliser le login rapide via Twitter.'
 

@@ -1,4 +1,4 @@
-[(#REM|magiclogin_facebook_ok|ou{#REM|magiclogin_twitter_ok}|ou{#REM|magiclogin_persona_ok})
+[(#REM|magiclogin_ok)
 <p class="login-links"><span class="login-label"><:lien_connecter:> via</span>
 	<span class="login-with">
 		[<span (#REM|magiclogin_facebook_ok)
@@ -7,6 +7,9 @@
 			class="sep"> | </span></span>][<span (#REM|magiclogin_twitter_ok)
 			class="with with-twitter"><a
 			href="[(#URL_LOGIN{twitter,#ENV{url}})]" class="twitter" rel="nofollow" title="Twitter">[(#CHEMIN{images/login-twitter-24.png}|balise_img{Twitter})]</a><span
+			class="sep"> | </span></span>][<span (#REM|magiclogin_google_ok)
+			class="with with-google"><a
+			href="[(#URL_LOGIN{google,#ENV{url}})]" class="google" rel="nofollow" title="Google">[(#CHEMIN{images/login-google-24.png}|balise_img{Google})]</a><span
 			class="sep"> | </span></span>][<span (#REM|magiclogin_persona_ok)
 			class="with with-persona"><a
 			href="#" onclick="magiclogin_persona.start('[(#URL_LOGIN{persona,#ENV{url}})]',this);return false;"  title="Email"
