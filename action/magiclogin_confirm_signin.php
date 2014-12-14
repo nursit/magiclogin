@@ -74,7 +74,7 @@ function action_magiclogin_confirm_signin_dist() {
 				// poser un cookie admin aussi
 				$cookie = charger_fonction('cookie','action');
 				$cookie("@".$GLOBALS['visiteur_session']['login']);
-				$GLOBALS['redirect'] = _DIR_RESTREINT_ABS;
+				$GLOBALS['redirect'] = url_absolue(_DIR_RESTREINT_ABS,$GLOBALS['meta']['adresse_site']);
 			}
 			else
 				$GLOBALS['redirect'] = $GLOBALS['meta']['adresse_site'];
@@ -85,7 +85,7 @@ function action_magiclogin_confirm_signin_dist() {
 		if ($GLOBALS['visiteur_session']['id_auteur']){
 			// on passe id_auteur explicite pour forcer une lecture en base de toutes les infos
 			if (autoriser('ecrire','','',$GLOBALS['visiteur_session']['id_auteur']))
-				$GLOBALS['redirect'] = _DIR_RESTREINT_ABS;
+				$GLOBALS['redirect'] = url_absolue(_DIR_RESTREINT_ABS,$GLOBALS['meta']['adresse_site']);
 			else
 				$GLOBALS['redirect'] = $GLOBALS['meta']['adresse_site'];
 		}
