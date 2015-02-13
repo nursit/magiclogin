@@ -75,7 +75,7 @@ function magiclogin_persona_ok(){
  * @return string
  */
 function magiclogin_insert_head_css($flux){
-	$flux .= '<link rel="stylesheet"  href="'.find_in_path("css/magiclogin.css").'" type="text/css"></script>';
+	$flux .= '<link rel="stylesheet"  href="'.find_in_path("css/magiclogin.css").'" type="text/css">';
 	return $flux;
 }
 
