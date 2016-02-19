@@ -8,7 +8,7 @@
 		parametre : url d'action ]
 		#ACTION_FORMULAIRE{#ENV{action}}
 		#SET{fl,editer_profil}
-		<ul>
+		<ul class="editer-groupe">
 			#SET{name,nom}#SET{obli,'obligatoire'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)][(#GET{obli}|oui)<b><:info_obligatoire_02:></b>]</label>[

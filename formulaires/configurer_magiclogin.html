@@ -10,7 +10,7 @@
 		#ACTION_FORMULAIRE{#ENV{action}}
 
 		#SET{fl,magiclogin}
-		<ul>
+		<ul class="editer-groupe">
 			#SET{name,taille_icones}#SET{obli,''}#SET{defaut,'24'}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 			<li class="editer long_label editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 				<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
@@ -42,12 +42,12 @@
 				<fieldset class="api">
 					<legend><:magiclogin:legend_api_facebook:></legend>
 					<p class="explication"><:magiclogin:explication_facebook_api_oauth:></p>
-					<ul class="compte">
-						<li class="editer_facebook_consumer_key facebook_conf[(#GET{api_erreur})erreur]">
+					<ul class="editer-groupe compte">
+						<li class="editer editer_facebook_consumer_key facebook_conf[(#GET{api_erreur})erreur]">
 							<label for="facebook_consumer_key"><:magiclogin:label_facebook_consumer_key:></label>
 							<input type="text" name="facebook_consumer_key" value="[(#ENV{facebook_consumer_key})]" id="facebook_consumer_key" class="text" />
 						</li>
-						<li class="editer_facebook_consumer_secret facebook_conf[(#GET{api_erreur})erreur]">
+						<li class="editer editer_facebook_consumer_secret facebook_conf[(#GET{api_erreur})erreur]">
 							<label for="facebook_consumer_secret"><:magiclogin:label_facebook_consumer_secret:></label>
 							<input type="text" name="facebook_consumer_secret" value="[(#ENV{facebook_consumer_secret}|=={#CONFIG{magiclogin/facebook_consumer_secret}}|?{'',#ENV{facebook_consumer_secret}})]" id="facebook_consumer_secret" class="text" />
 							[<em><tt>(#CONFIG{magiclogin/facebook_consumer_secret}|magiclogin_masquer_secret)</tt></em>]
@@ -86,7 +86,7 @@
 					<legend><:magiclogin:legend_api_google:></legend>
 					#SET{url_callback,#EVAL{_DIR_RACINE}|concat{magiclogin.api/google/callback}|url_absolue}
 					<p class="explication"><:magiclogin:explication_google_api_oauth{url_redirect=#GET{url_callback}}:></p>
-					<ul class="compte">
+					<ul class="editer-groupe compte">
 						#SET{name,google_client_id}#SET{obli,''}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
 						<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
 							<label for="#GET{name}">[(#GET{fl}|concat{':label_',#GET{name}}|_T)]</label>[
