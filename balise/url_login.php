@@ -28,7 +28,7 @@ function balise_URL_LOGIN_stat ($args, $context_compil) {
 // http://doc.spip.org/@balise_URL_LOGIN_dyn
 function balise_URL_LOGIN_dyn($with, $cible) {
 
-	if ($GLOBALS['visiteur_session']['login'] OR $GLOBALS['visiteur_session']['statut']) return '';
+	if (isset($GLOBALS['visiteur_session']['login']) OR isset($GLOBALS['visiteur_session']['statut'])) return '';
 
 	if (!$cible){
 		if (_request(_SPIP_PAGE)=='login' AND _request('url'))
