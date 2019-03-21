@@ -41,9 +41,9 @@ function magiclogin_google_ok(){
 	include_spip("inc/config");
 	if (lire_config('magiclogin/activer_google','oui')=='oui'
 		AND lire_config('magiclogin/google_client_id')
-		AND lire_config('magiclogin/google_client_secret')
-		AND lire_config('magiclogin/google_api_key'))
-		return ' ';
+		// AND lire_config('magiclogin/google_client_secret')
+		// AND lire_config('magiclogin/google_api_key'))
+	)	return ' ';
 	return '';
 }
 
@@ -191,5 +191,16 @@ function magiclogin_formulaire_fond($flux){
 	}
 
 	return $flux;
+}
+
+/**
+ * Insertion javascript dans l'espace prive
+ *
+ * @param array $flux
+ */
+function magiclogin_body_prive($flux){
+	  $magicloginjs = magiclogin_google_ok() == ' ' ? recuperer_fond('js/google.js', $fond['args']['contexte']) : '';
+    $flux = $flux . '<script type="text/javascript">' .  $magicloginjs ."</script>\n";
+  	return $flux;
 }
 ?>

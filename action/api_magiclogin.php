@@ -1,10 +1,10 @@
 <?php
 /**
- * Fichier gérant le routage du login vers le bon service
+ * Fichier gï¿½rant le routage du login vers le bon service
  *
  * @plugin     MagicLogin
  * @copyright  2013
- * @author     Cédric
+ * @author     Cï¿½dric
  * @licence    GNU/GPL
  * @package    SPIP\Magiclogin\Installation
  */

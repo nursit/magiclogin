@@ -8,8 +8,7 @@
 			class="with with-twitter"><a
 			href="[(#URL_LOGIN{twitter,#ENV{url}})]" class="twitter" rel="nofollow" title="Twitter">[(#CHEMIN{[images/login-twitter-(#CONFIG{magiclogin/taille_icones,24}).png]}|balise_img{Twitter})]</a><span
 			class="sep"> | </span></span>][<span (#REM|magiclogin_google_ok)
-			class="with with-google"><a
-			href="[(#URL_LOGIN{google,#ENV{url}})]" class="google" rel="nofollow" title="Google">[(#CHEMIN{[images/login-google-(#CONFIG{magiclogin/taille_icones,24}).png]}|balise_img{Google})]</a><span
+			class="with with-google"><span id="boutonGoosi"></span><span
 			class="sep"> | </span></span>][<span (#REM|magiclogin_persona_ok)
 			class="with with-persona"><a
 			href="#" onclick="magiclogin_persona.start('[(#URL_LOGIN{persona,#ENV{url}})]',this);return false;"  title="Email"
@@ -22,4 +21,9 @@
 		</script>]
 	<span class="login-messages"></span>
 </p>
+]
+[(#REM|magiclogin_google_ok)
+<script type="text/javascript">
+	<INCLURE{fond=js/google.js}>
+</script>
 ]
