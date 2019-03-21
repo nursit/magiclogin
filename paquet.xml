@@ -1,7 +1,7 @@
 <paquet
 	prefix="magiclogin"
 	categorie="auteur"
-	version="0.6.7"
+	version="0.6.8"
 	etat="test"
 	compatibilite="[3.0.0;3.2.*]"
 	logo="prive/themes/spip/images/magiclogin-32.png"
@@ -17,6 +17,8 @@
 	<pipeline nom="insert_head" />
 	<pipeline nom="insert_head_css" />
 	<pipeline nom="formulaire_fond" />
+	<pipeline nom="declarer_tables_objets_sql" />
+	<pipeline nom="body_prive" />
 
 
 	<utilise nom="twitter" compatibilite="[1.1.1;]" />

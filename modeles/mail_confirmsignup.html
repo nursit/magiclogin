@@ -9,12 +9,11 @@
 <body>
 <title>[\[(#NOM_SITE_SPIP|nettoyer_titre_email)\] : <:signup:titre_mail_confirm_signup{social_source=#GET{source}}|nettoyer_titre_email:>]</title>
 
-[(#SET{nom,[<b>(#ENV{nom})</b>]})]
-<p><:form_forum_bonjour{nom=#GET{nom}}:></p>
+[(#SET{url_confirm, [(#ENV{url_confirm}|parametre_url{redirect,#ENV{redirect}})]})]
 
-#SET{url_confirm,#ENV{url_confirm}|parametre_url{redirect,#ENV{redirect},'&'}|url_absolue}
-[(#SET{url_confirm,[<br><center>(#INCLURE{fond=emails/inc-button,url=#GET{url_confirm},label=<:signup:bouton_me_connecter:>,width=250px})</center><br>]})]
-<p><:signup:info_finir_inscription_suivre_lien{url_confirm=#GET{url_confirm}}:></p>
+<:form_forum_bonjour{nom=#ENV{nom}}:>
 
-</body>
-#FILTRE{facteur_email_wrap_to_html}
+<:signup:info_finir_inscription_suivre_lien{url_confirm=#GET{url_confirm}}:>
+
+
+#FILTRE{supprimer_tags|filtrer_entites|trim}

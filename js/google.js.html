@@ -1,0 +1,75 @@
+"use strict";
+
+var goosi = {};
+
+goosi.onLoad = function() {
+  //Initialiser google signin
+  gapi.load('auth2', function() {
+    gapi.auth2.init({client_id: '#CONFIG{magiclogin/google_client_id}'});
+    goosi.boutonConnecter();
+    });
+  };
+
+goosi.boutonConnecter = function() {
+  gapi.signin2.render('boutonGoosi', {
+    'scope': 'profile email',
+    'width' : [(#CONFIG{magiclogin/taille_icones,24})],
+    'height' : [(#CONFIG{magiclogin/taille_icones,24})],
+    'onsuccess': goosi.connecter,
+    'onfailure': goosi.deconnecter
+  });
+};
+
+goosi.connecter = function(googleUser) {
+  var id_token = googleUser.getAuthResponse().id_token;
+  //Rediriger vers la verification du token
+  window.location = '[(#URL_SITE_SPIP)]/magiclogin.api/google/' + id_token + '/' + encodeURIComponent(window.location.search);
+  };
+
+goosi.deconnecter = function(callback) {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log("signout");
+      if(typeof(callback) === 'function') {
+        callback();
+      }
+    });
+  };
+
+//Recuperer le click sur lien de deconnexion pour deconnecter de google
+jQuery(
+  function() {
+    //Chercher le bouton de deconnexion
+    var logout='logout';
+    jQuery('[href*='+logout+']')
+    // Le binder a la fonction signout de googlesign
+      .click(
+        function(event) {
+          // Bloquer le click
+          event.preventDefault();
+          var url_cible = $(this).attr('href');
+          goosi.deconnecter(function() {
+            // google signout est termine rediriger ver la cible du lien.
+            window.location = url_cible;
+          });
+        }
+      );
+  });
+
+function goosiInit() {
+  if(typeof(gapi) !== 'object') {
+    //Charger le javascript de google et lancer l'identification
+    jQuery.getScript("https://apis.google.com/js/platform.js?onload=goosiInit",function(res,status){
+      if(status == 'succes') {
+        goosi.onLoad();
+      }
+    });
+  } else {
+    goosi.onLoad();
+  }
+};
+
+goosiInit();
+onAjaxLoad(function(){
+   goosiInit();
+});

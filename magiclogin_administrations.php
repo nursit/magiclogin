@@ -46,6 +46,7 @@ function magiclogin_upgrade($nom_meta_base_version, $version_cible) {
 		array('sql_alter',"TABLE spip_auteurs ADD twitter_token VARCHAR(255) DEFAULT '' NOT NULL"),
 		array('sql_alter',"TABLE spip_auteurs ADD twitter_token_secret VARCHAR(255) DEFAULT '' NOT NULL"),
 		array('sql_alter',"TABLE spip_auteurs ADD facebook_id VARCHAR(255) DEFAULT '' NOT NULL"),
+		array('sql_alter',"TABLE spip_auteurs ADD google_id VARCHAR(255) DEFAULT '' NOT NULL"),
 	);
 
 	$maj['0.2.0'] = array(
@@ -70,7 +71,10 @@ function magiclogin_upgrade($nom_meta_base_version, $version_cible) {
  * @return void
 **/
 function magiclogin_vider_tables($nom_meta_base_version) {
-
+	sql_alter("TABLE spip_auteurs DROP twitter_token");
+	sql_alter("TABLE spip_auteurs DROP twitter_token_secret");
+	sql_alter("TABLE spip_auteurs DROP facebook_id");
+	sql_alter("TABLE spip_auteurs DROP google_id");
 
 	effacer_meta($nom_meta_base_version);
 }

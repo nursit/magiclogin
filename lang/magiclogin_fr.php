@@ -2,7 +2,7 @@
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
- 
+
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// M
@@ -27,13 +27,13 @@ Nous avons juste besoin de quelques informations pour vous identifier.',
 	'label_taille_icones_48' => '48px',
 
 	'explication_facebook_api_oauth' => 'Créez une application Facebook <a href="https://developers.facebook.com/apps">dans l\'espace développeurs (https://developers.facebook.com/apps)</a>.
-Entrez ci-dessous les clés d\'identification et enregistrez (<a href="http://www.designaesthetic.com/2012/03/02/create-facebook-login-oauth-php-sdk/">Plus d\'aide</a>).',
+Entrez ci-dessous les clés d\'identification et enregistrez.',
 	'label_facebook_consumer_key' => 'Cl&eacute; cliente (<em>App ID</em>)',
 	'label_facebook_consumer_secret' => 'Cl&eacute; secr&#232;te (<em>App Secret</em>)',
 	'legend_api_facebook' => 'Application Facebook',
 
-	'explication_google_api_oauth' => 'Créez une application Google <a href="https://console.developers.google.com/">dans la console développeurs (https://console.developers.google.com/)</a> avec l\'url de redirection <tt>@url_redirect@</tt>.
-Entrez ci-dessous les clés d\'identification et enregistrez (<a href="http://phppot.com/php/php-google-oauth-login/">Plus d\'aide</a>).',
+	 'explication_google_api_google_signin' => 'Créez une application Google <a href="https://console.developers.google.com/">dans la console développeurs (https://console.developers.google.com/)</a>.
+Entrez ci-dessous l\'id client et enregistrez (<a href="https://developers.google.com/identity/sign-in/web/sign-in">Plus d\'aide</a>).',
 	'label_google_client_id' => 'Identifiant Client',
 	'label_google_client_secret' => 'Code secret Client',
 	'label_google_api_key' => 'Clé de l\'API',
